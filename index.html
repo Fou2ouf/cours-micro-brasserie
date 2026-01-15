@@ -97,13 +97,8 @@
     }
     .theme-btn.active { background: var(--correct); }
     .theme-btn.started::before {
-      content: "▶";
-      position: absolute;
-      top: 4px;
-      right: 8px;
-      font-size: 0.7em;
-      color: #ff9800;
-      font-weight: bold;
+      content: "";
+      display: none;
     }
     .theme-btn.completed::before {
       content: "✓";
@@ -259,11 +254,6 @@
   </style>
 </head>
 <body>
-  <!-- Message iOS pour ouvrir dans Safari -->
-  <div id="iosWarning" style="display: none; position: fixed; top: 0; left: 0; right: 0; background: #ff9800; color: #000; padding: 1rem; text-align: center; z-index: 9999; font-weight: bold;">
-    ⚠️ Sur iPhone : Appuyez sur le bouton de partage puis "Ouvrir dans Safari" pour que l'application fonctionne correctement
-  </div>
-  
   <header>
     <h1>🍺 Physico-chimie du brassage <span style="float: right; font-size: 0.5em; font-weight: normal; color: rgba(255,255,255,0.7);">Nicolas Lambert</span></h1>
   </header>
@@ -271,6 +261,7 @@
   <!-- Barre de recherche -->
   <div style="padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); display: flex; gap: 1rem; align-items: center;">
     <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+    <button id="statsBtn" style="background: #f59e0b; color: #000; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📊 Statistiques</button>
     <button id="exportAllThemes" style="background: #3fb950; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📦 Exporter tous</button>
     <button id="resetAllData" style="background: #dc3545; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">🔄 Tout réinitialiser</button>
   </div>
@@ -282,7 +273,7 @@
   </div>
 
   <!-- Panneau de statistiques globales -->
-  <div id="statsPanel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
+  <div id="statsPanel" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
     <div class="stat-card" style="background: linear-gradient(135deg, #1f6feb 0%, #0d1117 100%); padding: 1.5rem; border-radius: 8px; text-align: center;">
       <div style="font-size: 2em; font-weight: bold; color: #58a6ff;">0</div>
       <div style="font-size: 0.9em; color: rgba(255,255,255,0.7);">Thèmes démarrés</div>
@@ -302,7 +293,7 @@
   </div>
 
   <!-- Graphiques circulaires de progression -->
-  <div id="statsChart" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 2rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
+  <div id="statsChart" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 2rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
     <div style="text-align: center;">
       <canvas id="completedChart" width="150" height="150"></canvas>
       <div style="margin-top: 1rem; color: var(--text); font-weight: 600;">Terminés</div>
@@ -4199,38 +4190,6 @@ const ficheTitle = document.getElementById("ficheTitle");
 const ficheContent = document.getElementById("ficheContent");
 const progressEl = document.getElementById("progress");
 
-// Détection iOS et affichage du message d'avertissement
-function detectiOSViewer() {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isInAppBrowser = /(WebView|WhatsApp|Instagram|FBAN|FBAV)/.test(navigator.userAgent);
-  const isStandaloneSafari = window.navigator.standalone === true;
-  
-  if (isIOS && !isStandaloneSafari) {
-    const warning = document.getElementById('iosWarning');
-    if (warning) {
-      warning.style.display = 'block';
-      // Cacher après 10 secondes si on peut quand même utiliser l'app
-      setTimeout(() => {
-        warning.style.opacity = '0.8';
-        warning.style.transition = 'opacity 0.5s';
-      }, 10000);
-    }
-    
-    // Si c'est un WebView (WhatsApp, etc.), on affiche une alerte bloquante
-    if (isInAppBrowser) {
-      setTimeout(() => {
-        alert('⚠️ iPhone détecté!\n\nPour utiliser cette application:\n1. Appuyez sur le bouton de partage (carré avec flèche)\n2. Sélectionnez "Ouvrir dans Safari"\n\nLe lecteur intégré de WhatsApp bloque les fonctionnalités JavaScript.');
-      }, 500);
-    }
-  }
-  
-  return { isIOS, isInAppBrowser, isStandaloneSafari };
-}
-
-// Exécuter la détection au chargement
-const deviceInfo = detectiOSViewer();
-console.log('📱 Device Info:', deviceInfo);
-
 let currentTheme = null;
 let currentQuestions = [];
 let answers = [];
@@ -4353,6 +4312,10 @@ function selectTheme(theme, btn) {
   renderFiche(theme);
   quizContainer.innerHTML = "";
   progressEl.textContent = "—";
+  // Amener la fiche en vue lors du clic sur un thème
+  if (ficheEl && ficheEl.scrollIntoView) {
+    ficheEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
   
   // Réinitialiser la recherche dans le thème
   themeSearchBar.value = '';
@@ -5248,6 +5211,54 @@ if (exportAllThemesBtn) {
 } else {
   console.error('Bouton exportAllThemes non trouvé !');
 }
+
+// Bouton d'accès/affichage des statistiques
+(function setupStatsButton(){
+  const statsBtn = document.getElementById('statsBtn');
+  const statsPanel = document.getElementById('statsPanel');
+  const statsChart = document.getElementById('statsChart');
+  if (!statsBtn || !statsPanel || !statsChart) return;
+
+  let statsVisible = false;
+
+  const refresh = () => {
+    statsPanel.style.display = statsVisible ? 'grid' : 'none';
+    statsChart.style.display = statsVisible ? 'grid' : 'none';
+    statsBtn.textContent = statsVisible ? '📊 Masquer stats' : '📊 Statistiques';
+    if (statsVisible) {
+      statsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  statsBtn.addEventListener('click', () => {
+    statsVisible = !statsVisible;
+    refresh();
+  });
+
+  refresh();
+})();
+
+// Supprimer une éventuelle bannière iOS "Ouvrir dans Safari" injectée par un webview
+(function removeIosShareBanner() {
+  const phrases = [
+    'Ouvrir dans Safari',
+    'ouvrir dans Safari',
+    'Appuyez sur le bouton de partage'
+  ];
+  const hide = () => {
+    const nodes = Array.from(document.body.querySelectorAll('*')).filter(el => {
+      const text = (el.textContent || '').trim();
+      return text && phrases.some(p => text.includes(p));
+    });
+    nodes.forEach(el => {
+      const target = el.closest('[style*="position:fixed"], [style*="position: sticky"], .banner, .alert, .notice') || el;
+      target.style.display = 'none';
+    });
+  };
+  hide();
+  const observer = new MutationObserver(hide);
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
 
 </script>
 </body>
