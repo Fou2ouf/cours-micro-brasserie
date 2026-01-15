@@ -255,25 +255,25 @@
 </head>
 <body>
   <header>
-    <h1>🍺 Physico-chimie du brassage <span style="float: right; font-size: 0.5em; font-weight: normal; color: rgba(255,255,255,0.7);">Nicolas Lambert</span></h1>
+    <h1 id="courseTitle" style="cursor: pointer; transition: opacity 0.2s;">🍺 Physico-chimie du brassage <span id="toggleIcon" style="margin-left: 1rem; font-size: 0.7em;">▼</span><span style="float: right; font-size: 0.5em; font-weight: normal; color: rgba(255,255,255,0.7);">Nicolas Lambert</span></h1>
   </header>
 
   <!-- Barre de recherche -->
-  <div style="padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); display: flex; gap: 1rem; align-items: center;">
-    <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+  <div id="searchBarContainer" class="course-content" style="padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+    <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; min-width: 300px; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
     <button id="statsBtn" style="background: #f59e0b; color: #000; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📊 Statistiques</button>
     <button id="exportAllThemes" style="background: #3fb950; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📦 Exporter tous</button>
     <button id="resetAllData" style="background: #dc3545; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">🔄 Tout réinitialiser</button>
   </div>
 
   <!-- Résultats de recherche -->
-  <div id="searchResults" style="display: none; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); max-height: 400px; overflow-y: auto;">
+  <div id="searchResults" class="course-content" style="display: none; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); max-height: 400px; overflow-y: auto;">
     <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1em;">📋 Résultats de recherche</h3>
     <div id="searchResultsContent"></div>
   </div>
 
   <!-- Panneau de statistiques globales -->
-  <div id="statsPanel" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
+  <div id="statsPanel" class="course-content" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
     <div class="stat-card" style="background: linear-gradient(135deg, #1f6feb 0%, #0d1117 100%); padding: 1.5rem; border-radius: 8px; text-align: center;">
       <div style="font-size: 2em; font-weight: bold; color: #58a6ff;">0</div>
       <div style="font-size: 0.9em; color: rgba(255,255,255,0.7);">Thèmes démarrés</div>
@@ -293,7 +293,7 @@
   </div>
 
   <!-- Graphiques circulaires de progression -->
-  <div id="statsChart" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 2rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
+  <div id="statsChart" class="course-content" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; padding: 2rem; background: var(--card-bg); border-bottom: 1px solid var(--accent);">
     <div style="text-align: center;">
       <canvas id="completedChart" width="150" height="150"></canvas>
       <div style="margin-top: 1rem; color: var(--text); font-weight: 600;">Terminés</div>
@@ -308,9 +308,9 @@
     </div>
   </div>
   
-  <nav id="nav"></nav>
+  <nav id="nav" class="course-content"></nav>
   
-  <div id="controls">
+  <div id="controls" class="course-content">
     <label for="questionCount">Questions :</label>
     <select id="questionCount">
       <option value="5">5 questions</option>
@@ -330,19 +330,19 @@
   </div>
 
   <!-- Barre de recherche dans le thème -->
-  <div id="themeSearchContainer" style="padding: 1rem; background: var(--card-bg); border-bottom: 1px solid var(--border); margin-bottom: 0;">
+  <div id="themeSearchContainer" class="course-content" style="padding: 1rem; background: var(--card-bg); border-bottom: 1px solid var(--border); margin-bottom: 0;">
     <input type="text" id="themeSearchBar" placeholder="🔍 Rechercher dans ce thème..." style="width: 100%; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
     <div id="themeSearchResults" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: 6px; max-height: 300px; overflow-y: auto;">
       <div id="themeSearchResultsContent"></div>
     </div>
   </div>
 
-  <div id="fiche">
+  <div id="fiche" class="course-content">
     <h2 id="ficheTitle"></h2>
     <div id="ficheContent"></div>
   </div>
   
-  <div id="quizContainer"></div>
+  <div id="quizContainer" class="course-content"></div>
 
 <script>
 function q(question, options, correctIndex, explanation) {
@@ -5236,6 +5236,51 @@ if (exportAllThemesBtn) {
   });
 
   refresh();
+})();
+
+// Toggle cours complet au clic sur le titre
+(function setupCourseToggle(){
+  const courseTitle = document.getElementById('courseTitle');
+  const toggleIcon = document.getElementById('toggleIcon');
+  const courseContents = document.querySelectorAll('.course-content');
+  const statsPanel = document.getElementById('statsPanel');
+  const statsChart = document.getElementById('statsChart');
+  
+  if (!courseTitle || !toggleIcon) return;
+  
+  let courseVisible = true;
+  // Mémoriser le display original de chaque section pour une restauration correcte (ex: flex pour la barre de recherche)
+  const originalDisplay = new Map();
+  courseContents.forEach(el => {
+    originalDisplay.set(el, getComputedStyle(el).display);
+  });
+  
+  const toggleCourse = () => {
+    courseVisible = !courseVisible;
+    courseContents.forEach(el => {
+      if (!courseVisible) {
+        // Fermer tout: masquer toutes les sections, y compris les statistiques
+        el.style.display = 'none';
+        return;
+      }
+      // À la réouverture, ne pas forcer l'affichage des stats; elles restent gérées par le bouton
+      if (el === statsPanel || el === statsChart) {
+        return;
+      }
+      // Restaurer le display original (flex, grid, block...) pour chaque section
+      const disp = originalDisplay.get(el) || '';
+      el.style.display = disp;
+    });
+    toggleIcon.textContent = courseVisible ? '▼' : '▶';
+  };
+  
+  courseTitle.addEventListener('click', toggleCourse);
+  courseTitle.addEventListener('mouseenter', () => {
+    courseTitle.style.opacity = '0.8';
+  });
+  courseTitle.addEventListener('mouseleave', () => {
+    courseTitle.style.opacity = '1';
+  });
 })();
 
 // Supprimer une éventuelle bannière iOS "Ouvrir dans Safari" injectée par un webview
