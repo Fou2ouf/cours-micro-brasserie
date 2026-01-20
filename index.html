@@ -59,37 +59,201 @@
       border-left: 4px solid var(--accent);
       box-shadow: 0 2px 10px rgba(37, 99, 235, 0.15);
     }
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(90deg, #a78bfa, #c4b5fd);
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(167, 139, 250, 0.4);
+      width: 100%;
+      box-sizing: border-box;
+    }
     .category-title {
       font-size: 1.1em;
       color: #fff;
-      background: linear-gradient(90deg, #a78bfa, #c4b5fd);
       font-weight: 700;
-      margin: 0 0 1rem 0;
-      padding: 0.6rem 1rem;
+      margin: 0;
+      padding: 0.25rem 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      width: 100%;
-      flex-basis: 100%;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgba(167, 139, 250, 0.4);
+      flex: 1;
+      min-width: 180px;
+    }
+    .category-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+      margin-left: auto;
+    }
+    .category-action-btn {
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .category-action-btn:hover {
+      transform: translateY(-1px) scale(1.01);
+      filter: brightness(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+    }
+    .category-action-btn.rev { background: #a78bfa; color: #000; }
+    .category-action-btn.stats { background: #f59e0b; color: #000; }
+    .category-action-btn.export { background: #3fb950; color: #fff; }
+
+    /* Modal stats catégorie */
+    .cat-stats-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1rem;
+    }
+    .cat-stats-card {
+      background: #0f172a;
+      color: #e5e7eb;
+      border: 1px solid #1f2937;
+      border-radius: 14px;
+      width: min(860px, 100%);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      padding: 1.5rem;
+    }
+    .cat-stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .cat-stats-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+    .cat-stats-badge {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(167, 139, 250, 0.15);
+      color: #c4b5fd;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .cat-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .cat-stat-card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    .cat-stat-label { color: #9ca3af; font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .cat-stat-value { font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .cat-stat-sub { color: #9ca3af; font-size: 0.8rem; }
+    .cat-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #1f2937;
+      overflow: hidden;
+      margin-top: 0.35rem;
+    }
+    .cat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3fb950, #2ea043);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    .cat-stats-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+    }
+    .cat-close-btn {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+    .cat-theme-list {
+      margin-top: 0.75rem;
+      background: #0b1220;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      max-height: 220px;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+    .cat-theme-list div { margin-bottom: 0.35rem; }
+
+    @media (max-width: 768px) {
+      .category-header {
+        flex-wrap: wrap;
+      }
+      .category-actions {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .category-title {
+        flex-basis: 100%;
+      }
+      .category-action-btn {
+        flex: 1 1 calc(33% - 0.5rem);
+        justify-content: center;
+      }
     }
     .category-group .theme-btn {
       flex: 1;
       min-width: 180px;
     }
+      .category-themes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+      .category-group {
+        width: 100%;
+      }
     .theme-btn {
-      padding: 1rem;
+      padding: 0.5rem 0.65rem;
       background: var(--accent);
       color: #000;
       border: none;
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
-      font-size: 0.9em;
+      font-size: 0.88em;
       transition: transform 0.2s;
       margin-right: 0.5rem;
       margin-bottom: 0.5rem;
       position: relative;
+      min-height: 44px;
     }
     .theme-btn:hover { 
       transform: scale(1.02);
@@ -97,17 +261,38 @@
     }
     .theme-btn.active { background: var(--correct); }
     .theme-btn.started::before {
-      content: "";
-      display: none;
-    }
-    .theme-btn.completed::before {
-      content: "✓";
+      content: "🚀";
       position: absolute;
       top: 4px;
       right: 8px;
-      font-size: 1em;
-      color: #4caf50;
-      font-weight: bold;
+      font-size: 1.05em;
+      color: #fbbf24;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.65);
+      animation: rocket-wiggle 1.6s ease-in-out infinite;
+    }
+    @keyframes rocket-wiggle {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-1px) rotate(-6deg); }
+      50% { transform: translateY(1px) rotate(6deg); }
+      75% { transform: translateY(-1px) rotate(-4deg); }
+    }
+    .theme-btn.completed::before {
+      content: "🎉";
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      font-size: 1.05em;
+      color: #22c55e;
+      text-shadow: 0 0 10px rgba(34, 197, 94, 0.55);
+      animation: confetti-pop 1.8s ease-in-out infinite;
+    }
+    @keyframes confetti-pop {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      15% { transform: scale(1.15) rotate(-5deg); }
+      30% { transform: scale(1.05) rotate(6deg); }
+      45% { transform: scale(1.12) rotate(-4deg); }
+      60% { transform: scale(1.02) rotate(3deg); }
+      75% { transform: scale(1.08) rotate(-2deg); }
     }
     .theme-container {
       display: flex;
@@ -251,6 +436,41 @@
       color: var(--accent);
       margin-left: auto;
     }
+
+    /* Navigation secondaire (retours) */
+    .scroll-nav {
+      display: none;
+      gap: 0.75rem;
+      padding: 1rem 2rem 2rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .scroll-nav button {
+      flex: 1 1 220px;
+      max-width: 320px;
+      background: #21262d;
+      color: var(--text);
+      border: 2px solid var(--border);
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .scroll-nav button:hover {
+      background: #2a3038;
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .scroll-nav {
+        padding: 1rem;
+      }
+      .scroll-nav button {
+        flex-basis: 100%;
+        max-width: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -263,6 +483,7 @@
     <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; min-width: 300px; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
     <button id="statsBtn" style="background: #f59e0b; color: #000; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📊 Statistiques</button>
     <button id="exportAllThemes" style="background: #3fb950; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📦 Exporter tous</button>
+    <button id="globalRevisionBtn" style="background: #a78bfa; color: #000; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📚 Revisions Totales</button>
     <button id="resetAllData" style="background: #dc3545; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">🔄 Tout réinitialiser</button>
   </div>
 
@@ -343,6 +564,11 @@
   </div>
   
   <div id="quizContainer" class="course-content"></div>
+
+  <div id="scrollNav" class="course-content scroll-nav">
+    <button id="backToFicheBtn">⬆️ Revenir à la fiche</button>
+    <button id="backToThemesBtn">⬆️ Revenir aux thèmes</button>
+  </div>
 
 <script>
 function q(question, options, correctIndex, explanation) {
@@ -4189,11 +4415,40 @@ const ficheEl = document.getElementById("fiche");
 const ficheTitle = document.getElementById("ficheTitle");
 const ficheContent = document.getElementById("ficheContent");
 const progressEl = document.getElementById("progress");
+const scrollNav = document.getElementById('scrollNav');
+const backToFicheBtn = document.getElementById('backToFicheBtn');
+const backToThemesBtn = document.getElementById('backToThemesBtn');
+const globalRevisionBtn = document.getElementById('globalRevisionBtn');
 
 let currentTheme = null;
 let currentQuestions = [];
 let answers = [];
 let showFiche = true;
+let globalRevisionActive = false;
+
+function toggleScrollNav(show) {
+  if (!scrollNav) return;
+  scrollNav.style.display = show ? 'flex' : 'none';
+}
+
+if (backToFicheBtn) {
+  backToFicheBtn.addEventListener('click', () => {
+    if (ficheEl && ficheEl.scrollIntoView) {
+      ficheEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
+if (backToThemesBtn) {
+  backToThemesBtn.addEventListener('click', () => {
+    const activeBtn = document.querySelector('.theme-btn.active');
+    if (activeBtn && activeBtn.scrollIntoView) {
+      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (nav && nav.scrollIntoView) {
+      nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
 
 // Système de suivi des thèmes (compatible Safari)
 let themeProgress = JSON.parse(safeGetItem('quizProgress', '{}'));
@@ -4222,6 +4477,245 @@ function updateThemeButtons() {
       if (status === 'completed') btn.classList.add('completed');
     }
   });
+}
+
+// Actions par catégorie
+function getThemesByCategory(category) {
+  return THEMES.filter(t => t.category === category);
+}
+
+function startCategoryRevision(category) {
+  const themes = getThemesByCategory(category);
+  if (themes.length === 0) {
+    alert(`⚠️ Aucune catégorie trouvée pour ${category}.`);
+    return;
+  }
+
+  const failed = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
+  const aggregated = [];
+
+  themes.forEach(theme => {
+    const indices = failed[theme.id] || [];
+    indices.forEach(idx => {
+      const base = theme.questions[idx];
+      if (!base) return;
+      const optionsWithIndex = base.options.map((opt, idOpt) => ({ opt, idOpt }));
+      const shuffledOptions = shuffle(optionsWithIndex);
+      const newCorrectIndex = shuffledOptions.findIndex(item => item.idOpt === base.correctIndex);
+      aggregated.push({
+        question: base.question,
+        options: shuffledOptions.map(item => item.opt),
+        correctIndex: newCorrectIndex,
+        explanation: base.explanation,
+        sourceThemeId: theme.id,
+        sourceThemeTitle: theme.title,
+        originalIndex: idx
+      });
+    });
+  });
+
+  if (aggregated.length === 0) {
+    alert('🎉 Aucune question ratée à réviser pour cette catégorie.');
+    return;
+  }
+
+  globalRevisionActive = true;
+  revisionModeActive = false;
+  if (revisionBtn) {
+    revisionBtn.style.background = '#a78bfa';
+    revisionBtn.textContent = '🔄 Mode révision';
+  }
+
+  currentTheme = { id: `__cat_revision__${category}__`, title: `Révisions ${category}`, category };
+  currentQuestions = aggregated;
+  answers = new Array(aggregated.length).fill(null);
+  renderQuiz();
+  if (quizContainer && quizContainer.scrollIntoView) {
+    quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function showCategoryStats(category) {
+  const themes = getThemesByCategory(category);
+  if (themes.length === 0) {
+    alert(`⚠️ Aucune catégorie trouvée pour ${category}.`);
+    return;
+  }
+
+  const themeIds = themes.map(t => t.id);
+  const started = themeIds.filter(id => getThemeStatus(id) === 'started').length;
+  const completed = themeIds.filter(id => getThemeStatus(id) === 'completed').length;
+  const notStarted = themeIds.length - started - completed;
+
+  const themeStats = JSON.parse(safeGetItem('themeStats', '{}') || '{}');
+  const failedQuestions = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
+
+  let answered = 0;
+  let correct = 0;
+  let failedCount = 0;
+
+  themeIds.forEach(id => {
+    const st = themeStats[id];
+    if (st && st.answered !== undefined && st.correct !== undefined) {
+      answered += st.answered;
+      correct += st.correct;
+    }
+    if (Array.isArray(failedQuestions[id])) {
+      failedCount += failedQuestions[id].length;
+    }
+  });
+
+  const successRate = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  renderCategoryStatsModal(category, {
+    themesCount: themeIds.length,
+    started,
+    completed,
+    notStarted,
+    answered,
+    correct,
+    successRate,
+    failedCount,
+    themeTitles: themes.map(t => t.title)
+  });
+}
+
+function exportCategoryThemes(category) {
+  const themes = getThemesByCategory(category);
+  if (themes.length === 0) {
+    alert(`⚠️ Aucune catégorie trouvée pour ${category}.`);
+    return;
+  }
+  if (!confirm(`📦 Exporter ${themes.length} thème(s) de la catégorie ${category} ?`)) {
+    return;
+  }
+
+  let exportedCount = 0;
+  const safeCategory = category.replace(/\s+/g, '_');
+  themes.forEach((theme, index) => {
+    setTimeout(() => {
+      try {
+        const html = generateThemeHtmlDocument(theme);
+        const filename = `Cat_${safeCategory}_${String(index + 1).padStart(2, '0')}_${theme.id}.html`;
+        downloadHtmlFile(html, filename);
+        exportedCount++;
+        if (exportedCount === themes.length) {
+          setTimeout(() => {
+            alert(`✅ Export catégorie ${category} terminé !\n\n${themes.length} page(s) HTML téléchargée(s).`);
+          }, 400);
+        }
+      } catch(e) {
+        console.error('Erreur export catégorie', e);
+        alert(`❌ Erreur lors de l'export: ${e.message}`);
+      }
+    }, index * 120);
+  });
+}
+
+function renderCategoryStatsModal(category, data) {
+  const existing = document.querySelector('.cat-stats-backdrop');
+  if (existing) existing.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'cat-stats-backdrop';
+
+  const card = document.createElement('div');
+  card.className = 'cat-stats-card';
+
+  const header = document.createElement('div');
+  header.className = 'cat-stats-header';
+
+  const title = document.createElement('div');
+  title.className = 'cat-stats-title';
+  title.textContent = `Statistiques — ${category}`;
+
+  const badge = document.createElement('div');
+  badge.className = 'cat-stats-badge';
+  badge.textContent = `${data.themesCount} thème(s)`;
+
+  header.appendChild(title);
+  header.appendChild(badge);
+
+  const grid = document.createElement('div');
+  grid.className = 'cat-stats-grid';
+
+  const cards = [
+    { label: 'Terminés', value: data.completed, sub: 'Succès', color: '#3fb950' },
+    { label: 'Commencés', value: data.started, sub: 'En cours', color: '#f59e0b' },
+    { label: 'Non démarrés', value: data.notStarted, sub: 'À lancer', color: '#6e7681' },
+    { label: 'Réponses', value: data.answered, sub: `${data.correct} correctes`, color: '#58a6ff' },
+    { label: 'Taux de réussite', value: data.successRate + '%', sub: `${data.correct}/${data.answered || 1}`, color: '#8b5cf6' },
+    { label: 'Questions ratées', value: data.failedCount, sub: 'À réviser', color: '#ef4444' }
+  ];
+
+  cards.forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'cat-stat-card';
+    const lab = document.createElement('div');
+    lab.className = 'cat-stat-label';
+    lab.textContent = c.label;
+    const val = document.createElement('div');
+    val.className = 'cat-stat-value';
+    val.textContent = c.value;
+    const sub = document.createElement('div');
+    sub.className = 'cat-stat-sub';
+    sub.textContent = c.sub;
+
+    const bar = document.createElement('div');
+    bar.className = 'cat-bar';
+    const fill = document.createElement('div');
+    fill.className = 'cat-bar-fill';
+    let pct = 0;
+    if (c.label === 'Taux de réussite') {
+      pct = data.successRate;
+    } else if (c.label === 'Terminés') {
+      pct = data.themesCount ? Math.round((data.completed / data.themesCount) * 100) : 0;
+    } else if (c.label === 'Commencés') {
+      pct = data.themesCount ? Math.round((data.started / data.themesCount) * 100) : 0;
+    }
+    fill.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    fill.style.background = c.color;
+    bar.appendChild(fill);
+
+    item.appendChild(lab);
+    item.appendChild(val);
+    item.appendChild(sub);
+    item.appendChild(bar);
+    grid.appendChild(item);
+  });
+
+  const list = document.createElement('div');
+  list.className = 'cat-theme-list';
+  list.innerHTML = data.themeTitles.map(t => `<div>• ${t}</div>`).join('');
+
+  const footer = document.createElement('div');
+  footer.className = 'cat-stats-footer';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'cat-close-btn';
+  closeBtn.textContent = 'Fermer';
+  closeBtn.addEventListener('click', () => backdrop.remove());
+
+  footer.appendChild(closeBtn);
+
+  card.appendChild(header);
+  card.appendChild(grid);
+  card.appendChild(list);
+  card.appendChild(footer);
+
+  backdrop.appendChild(card);
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  document.addEventListener('keydown', function escHandler(ev) {
+    if (ev.key === 'Escape') {
+      backdrop.remove();
+      document.removeEventListener('keydown', escHandler);
+    }
+  });
+
+  document.body.appendChild(backdrop);
 }
 
 function resetThemeQuiz(themeId) {
@@ -4266,11 +4760,46 @@ categoryOrder.forEach(category => {
   
   const catDiv = document.createElement("div");
   catDiv.className = "category-group";
-  
+
+  const catHeader = document.createElement("div");
+  catHeader.className = "category-header";
+
   const catTitle = document.createElement("h3");
   catTitle.className = "category-title";
   catTitle.textContent = category;
-  catDiv.appendChild(catTitle);
+  catHeader.appendChild(catTitle);
+
+  const catActions = document.createElement("div");
+  catActions.className = "category-actions";
+
+  const revBtn = document.createElement("button");
+  revBtn.className = "category-action-btn rev";
+  revBtn.textContent = "🔄 Révisions";
+  revBtn.title = "Relancer les questions ratées de cette catégorie";
+  revBtn.addEventListener('click', () => startCategoryRevision(category));
+
+  const statBtn = document.createElement("button");
+  statBtn.className = "category-action-btn stats";
+  statBtn.textContent = "📊 Statistiques";
+  statBtn.title = "Voir les stats de cette catégorie";
+  statBtn.addEventListener('click', () => showCategoryStats(category));
+
+  const exportBtn = document.createElement("button");
+  exportBtn.className = "category-action-btn export";
+  exportBtn.textContent = "📦 Exporter";
+  exportBtn.title = "Exporter tous les thèmes de cette catégorie";
+  exportBtn.addEventListener('click', () => exportCategoryThemes(category));
+
+  catActions.appendChild(revBtn);
+  catActions.appendChild(statBtn);
+  catActions.appendChild(exportBtn);
+
+  catHeader.appendChild(catActions);
+  catDiv.appendChild(catHeader);
+
+  const catThemes = document.createElement("div");
+  catThemes.className = "category-themes";
+  catDiv.appendChild(catThemes);
   
   if (themes.length === 0) {
     const emptyMsg = document.createElement("p");
@@ -4278,7 +4807,7 @@ categoryOrder.forEach(category => {
     emptyMsg.style.fontStyle = "italic";
     emptyMsg.style.padding = "0.5rem";
     emptyMsg.textContent = "Aucun thème pour l'instant";
-    catDiv.appendChild(emptyMsg);
+    catThemes.appendChild(emptyMsg);
     nav.appendChild(catDiv);
     return;
   }
@@ -4289,7 +4818,7 @@ categoryOrder.forEach(category => {
     btn.textContent = t.title;
     btn.setAttribute('data-theme-id', t.id);
     btn.onclick = () => selectTheme(t, btn);
-    catDiv.appendChild(btn);
+    catThemes.appendChild(btn);
     
     if (THEMES.indexOf(t) === 0 && !currentTheme) {
       currentTheme = t;
@@ -4302,6 +4831,7 @@ categoryOrder.forEach(category => {
 
 // Appliquer les indicateurs de progression
 updateThemeButtons();
+toggleScrollNav(true);
 
 function selectTheme(theme, btn) {
   currentTheme = theme;
@@ -4312,6 +4842,7 @@ function selectTheme(theme, btn) {
   renderFiche(theme);
   quizContainer.innerHTML = "";
   progressEl.textContent = "—";
+  toggleScrollNav(true);
   // Amener la fiche en vue lors du clic sur un thème
   if (ficheEl && ficheEl.scrollIntoView) {
     ficheEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -4362,15 +4893,18 @@ function renderQuiz() {
   quizContainer.innerHTML = "";
   if (currentQuestions.length === 0) {
     quizContainer.innerHTML = "<p style='text-align:center;padding:2rem;'>Sélectionnez un thème et cliquez Démarrer.</p>";
+    toggleScrollNav(true);
     return;
   }
+  toggleScrollNav(true);
 
   let answered = answers.filter(a => a !== null).length;
   let correct = answers.filter((a, i) => a === currentQuestions[i].correctIndex).length;
-  progressEl.textContent = `Tentées: ${answered}/${currentQuestions.length} • Correctes: ${correct}`;
+  const labelPrefix = globalRevisionActive ? `${currentTheme && currentTheme.title ? currentTheme.title + ' — ' : 'Révisions totales — '}` : '';
+  progressEl.textContent = `${labelPrefix}Tentées: ${answered}/${currentQuestions.length} • Correctes: ${correct}`;
   
   // Sauvegarder les statistiques du thème actuel
-  if (currentTheme) {
+  if (!globalRevisionActive && currentTheme) {
     const themeStats = JSON.parse(safeGetItem('themeStats', '{}') || '{}');
     if (!themeStats[currentTheme.id]) {
       themeStats[currentTheme.id] = {};
@@ -4381,17 +4915,19 @@ function renderQuiz() {
   }
   
   // Marquer comme terminé si toutes les questions sont correctes
-  if (answered === currentQuestions.length && correct === currentQuestions.length) {
-    updateThemeStatus(currentTheme.id, 'completed');
-    updateThemeButtons();
-    updateStats();
-  } else if (answered > 0) {
-    // Marquer comme démarré si au moins une question répondue
-    if (getThemeStatus(currentTheme.id) === 'not-started') {
-      updateThemeStatus(currentTheme.id, 'started');
+  if (!globalRevisionActive && currentTheme) {
+    if (answered === currentQuestions.length && correct === currentQuestions.length) {
+      updateThemeStatus(currentTheme.id, 'completed');
       updateThemeButtons();
+      updateStats();
+    } else if (answered > 0) {
+      // Marquer comme démarré si au moins une question répondue
+      if (getThemeStatus(currentTheme.id) === 'not-started') {
+        updateThemeStatus(currentTheme.id, 'started');
+        updateThemeButtons();
+      }
+      updateStats();
     }
-    updateStats();
   }
 
   currentQuestions.forEach((q, idx) => {
@@ -4416,10 +4952,14 @@ function renderQuiz() {
           answers[idx] = optIdx;
           
           // Suivre les questions ratées
-          if (optIdx !== q.correctIndex) {
-            addFailedQuestion(currentTheme.id, idx);
-          } else {
-            removeFailedQuestion(currentTheme.id, idx);
+          const failureTheme = q.sourceThemeId || (currentTheme && currentTheme.id);
+          const failureIndex = (q.originalIndex !== undefined ? q.originalIndex : idx);
+          if (failureTheme) {
+            if (optIdx !== q.correctIndex) {
+              addFailedQuestion(failureTheme, failureIndex);
+            } else {
+              removeFailedQuestion(failureTheme, failureIndex);
+            }
           }
           
           renderQuiz();
@@ -4428,6 +4968,15 @@ function renderQuiz() {
       optDiv.appendChild(btn);
     });
     div.appendChild(optDiv);
+
+    if (q.sourceThemeTitle) {
+      const tag = document.createElement('div');
+      tag.style.color = 'var(--muted)';
+      tag.style.marginBottom = '0.5rem';
+      tag.style.fontSize = '0.9em';
+      tag.textContent = `Thème : ${q.sourceThemeTitle}`;
+      div.prepend(tag);
+    }
 
     if (answers[idx] !== null) {
       const exp = document.createElement("div");
@@ -4668,6 +5217,54 @@ resetAllDataBtn.addEventListener('click', () => {
   }
 });
 
+// Révision globale (toutes les questions ratées)
+if (globalRevisionBtn) {
+  globalRevisionBtn.addEventListener('click', () => {
+    const failed = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
+    const aggregated = [];
+
+    Object.entries(failed).forEach(([themeId, indices]) => {
+      const theme = THEMES.find(t => t.id === themeId);
+      if (!theme || !Array.isArray(indices)) return;
+
+      indices.forEach(idx => {
+        const base = theme.questions[idx];
+        if (!base) return;
+        const optionsWithIndex = base.options.map((opt, idOpt) => ({ opt, idOpt }));
+        const shuffledOptions = shuffle(optionsWithIndex);
+        const newCorrectIndex = shuffledOptions.findIndex(item => item.idOpt === base.correctIndex);
+        aggregated.push({
+          question: base.question,
+          options: shuffledOptions.map(item => item.opt),
+          correctIndex: newCorrectIndex,
+          explanation: base.explanation,
+          sourceThemeId: theme.id,
+          sourceThemeTitle: theme.title,
+          originalIndex: idx
+        });
+      });
+    });
+
+    if (aggregated.length === 0) {
+      alert('🎉 Aucune question ratée à réviser pour l\'ensemble des thèmes.');
+      return;
+    }
+
+    globalRevisionActive = true;
+    revisionModeActive = false;
+    revisionBtn.style.background = '#a78bfa';
+    revisionBtn.textContent = '🔄 Mode révision';
+
+    currentTheme = { id: '__global_revision__', title: 'Révisions totales', category: 'GLOBAL' };
+    currentQuestions = aggregated;
+    answers = new Array(aggregated.length).fill(null);
+    renderQuiz();
+    if (quizContainer && quizContainer.scrollIntoView) {
+      quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+}
+
 // Mise à jour des statistiques globales
 function updateStats() {
   const started = THEMES.filter(t => getThemeStatus(t.id) === 'started').length;
@@ -4758,6 +5355,7 @@ revisionBtn.addEventListener('click', () => {
     return;
   }
   
+  globalRevisionActive = false;
   revisionModeActive = !revisionModeActive;
   
   if (revisionModeActive) {
@@ -4772,7 +5370,22 @@ revisionBtn.addEventListener('click', () => {
     }
     
     // Charger uniquement les questions ratées
-    const failedQuestions = failedIndices.map(idx => currentTheme.questions[idx]).filter(q => q !== undefined);
+    const failedQuestions = failedIndices.map(idx => {
+      const base = currentTheme.questions[idx];
+      if (!base) return null;
+      const optionsWithIndex = base.options.map((opt, idOpt) => ({ opt, idOpt }));
+      const shuffledOptions = shuffle(optionsWithIndex);
+      const newCorrectIndex = shuffledOptions.findIndex(item => item.idOpt === base.correctIndex);
+      return {
+        question: base.question,
+        options: shuffledOptions.map(item => item.opt),
+        correctIndex: newCorrectIndex,
+        explanation: base.explanation,
+        sourceThemeId: currentTheme.id,
+        sourceThemeTitle: currentTheme.title,
+        originalIndex: idx
+      };
+    }).filter(Boolean);
     
     if (failedQuestions.length === 0) {
       alert('⚠️ Erreur : Questions ratées introuvables.');
@@ -4780,19 +5393,7 @@ revisionBtn.addEventListener('click', () => {
       return;
     }
     
-    // Mélanger les options pour chaque question ratée
-    currentQuestions = failedQuestions.map(q => {
-      const optionsWithIndex = q.options.map((opt, idx) => ({ opt, idx }));
-      const shuffledOptions = shuffle(optionsWithIndex);
-      const newCorrectIndex = shuffledOptions.findIndex(item => item.idx === q.correctIndex);
-      
-      return {
-        question: q.question,
-        options: shuffledOptions.map(item => item.opt),
-        correctIndex: newCorrectIndex,
-        explanation: q.explanation
-      };
-    });
+    currentQuestions = failedQuestions;
     
     const revisionLength = currentQuestions.length;
     answers = new Array(revisionLength);
@@ -4811,12 +5412,14 @@ revisionBtn.addEventListener('click', () => {
     revisionBtn.textContent = '🔄 Mode révision';
     currentQuestions = [];
     answers = [];
+    toggleScrollNav(true);
     renderQuiz();
   }
 });
 
 // Gestion des questions ratées
 function addFailedQuestion(themeId, questionIndex) {
+  if (themeId === undefined || themeId === null) return;
   const failed = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
   if (!failed[themeId]) {
     failed[themeId] = [];
@@ -4829,6 +5432,7 @@ function addFailedQuestion(themeId, questionIndex) {
 }
 
 function removeFailedQuestion(themeId, questionIndex) {
+  if (themeId === undefined || themeId === null) return;
   const failed = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
   if (failed[themeId]) {
     failed[themeId] = failed[themeId].filter(i => i !== questionIndex);
@@ -4935,6 +5539,10 @@ updateStats();
 startQuizBtn.onclick = () => {
   if (!currentTheme) return;
   const count = Math.min(parseInt(questionCountSel.value) || 25, currentTheme.questions.length);
+  globalRevisionActive = false;
+  revisionModeActive = false;
+  revisionBtn.style.background = '#a78bfa';
+  revisionBtn.textContent = '🔄 Mode révision';
   
   // Sélectionner les questions et mélanger les options
   const selectedQuestions = pickExactCount(currentTheme.questions, count);
@@ -4962,7 +5570,7 @@ startQuizBtn.onclick = () => {
   // Marquer le thème comme commencé
   updateThemeStatus(currentTheme.id, 'started');
   updateThemeButtons();
-  
+
   renderQuiz();
 };
 
