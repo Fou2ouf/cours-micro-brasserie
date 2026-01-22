@@ -468,6 +468,19 @@
       box-shadow: none;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
+
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .scroll-nav.is-auto-hide.is-hidden {
+      opacity: 0;
+      transform: translateX(-50%) translateY(10px);
+      pointer-events: none;
+    }
+
+    .scroll-nav.is-auto-hide:not(.is-hidden) {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .scroll-nav button {
@@ -618,6 +631,7 @@
     @media (prefers-reduced-motion: reduce) {
       .scroll-nav button { transition: none; }
       .scroll-nav button:hover::after { animation: none; }
+      .scroll-nav { transition: none; }
     }
 
     @media (max-width: 640px) {
@@ -1129,6 +1143,324 @@
 
     @media (max-width: 900px) {
       .formula-grid, .formula-out { grid-template-columns: 1fr; }
+    }
+
+    /* Mode montre (Galaxy Watch / petits écrans quasi carrés)
+       Objectif : lisible + cliquable sans changer téléphone/PC.
+       Déclenchement : petite taille + aspect ratio ~ 1:1 (évite les téléphones).
+    */
+    @media (max-width: 480px) and (max-height: 480px) and (min-aspect-ratio: 9/10) and (max-aspect-ratio: 10/9) {
+      header { padding: 0.85rem; }
+      header h1 { font-size: 1.1em; line-height: 1.2; }
+
+      #searchBarContainer {
+        padding: 0.65rem !important;
+        gap: 0.5rem !important;
+      }
+
+      #searchBar {
+        min-width: 0 !important;
+        padding: 0.55rem 0.65rem !important;
+        font-size: 0.9em !important;
+      }
+
+      #searchBarContainer button {
+        padding: 0.55rem 0.75rem !important;
+        font-size: 0.88em !important;
+      }
+
+      #nav {
+        padding: 0.75rem;
+        gap: 0.5rem;
+      }
+
+      .category-group {
+        padding: 0.65rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .category-header {
+        padding: 0.45rem 0.55rem;
+        gap: 0.5rem;
+      }
+
+      .category-title {
+        font-size: 0.92em;
+        min-width: 0;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .category-actions {
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+
+      .category-action-btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.82em;
+        border-radius: 10px;
+      }
+
+      .category-themes {
+        gap: 0.45rem;
+      }
+
+      .category-group .theme-btn {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+
+      .theme-btn {
+        min-height: 40px;
+        padding: 0.5rem 0.6rem;
+        font-size: 0.82em;
+      }
+
+      #controls {
+        padding: 0.35rem 0.5rem;
+        gap: 0.35rem;
+        justify-content: center;
+      }
+
+      #controls select {
+        padding: 0.35rem 0.55rem;
+        font-size: 0.85em;
+      }
+
+      #controls button {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.82em;
+        flex: 1 1 calc(50% - 0.35rem);
+      }
+
+      #themeSearchContainer {
+        padding: 0.65rem !important;
+      }
+
+      #themeSearchBar {
+        padding: 0.55rem 0.65rem !important;
+        font-size: 0.9em !important;
+      }
+
+      .course-content {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      .scroll-nav {
+        width: calc(100vw - 16px);
+        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .scroll-nav button {
+        min-height: 38px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.88em;
+        max-width: none;
+      }
+
+      .cat-summary-card,
+      .cat-formulas-card,
+      .cat-stats-card,
+      .modal {
+        width: calc(100vw - 16px);
+        padding: 0.85rem;
+        border-radius: 12px;
+      }
+
+      .cat-summary-header h2,
+      .cat-formulas-header h2,
+      .cat-stats-header h2 {
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (shape: round) and (max-width: 480px) and (max-height: 480px) {
+      /* Même traitement pour écrans ronds (si supporté) */
+      header { padding: 0.85rem; }
+      header h1 { font-size: 1.08em; line-height: 1.2; }
+      #nav { padding: 0.75rem; }
+      .scroll-nav { width: calc(100vw - 18px); }
+    }
+
+    /* Mode montre MANUEL (activé via JS + localStorage) */
+    body.watch-mode header { padding: 0.85rem; }
+    body.watch-mode header h1 { font-size: 1.1em; line-height: 1.2; }
+
+    body.watch-mode #searchBarContainer {
+      padding: 0.65rem !important;
+      gap: 0.5rem !important;
+    }
+
+    body.watch-mode #searchBar {
+      min-width: 0 !important;
+      padding: 0.55rem 0.65rem !important;
+      font-size: 0.9em !important;
+    }
+
+    body.watch-mode #searchBarContainer button {
+      padding: 0.55rem 0.75rem !important;
+      font-size: 0.88em !important;
+    }
+
+    body.watch-mode #nav {
+      padding: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    body.watch-mode .category-group {
+      padding: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+
+    body.watch-mode .category-header {
+      padding: 0.45rem 0.55rem;
+      gap: 0.5rem;
+    }
+
+    body.watch-mode .category-title {
+      font-size: 0.92em;
+      min-width: 0;
+      padding: 0.2rem 0.5rem;
+    }
+
+    body.watch-mode .category-actions {
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    body.watch-mode .category-action-btn {
+      padding: 0.45rem 0.75rem;
+      font-size: 0.82em;
+      border-radius: 10px;
+    }
+
+    body.watch-mode .category-group .theme-btn {
+      flex: 1 1 100%;
+      min-width: 0;
+    }
+
+    body.watch-mode .theme-btn {
+      min-height: 40px;
+      padding: 0.5rem 0.6rem;
+      font-size: 0.82em;
+    }
+
+    body.watch-mode #controls {
+      padding: 0.35rem 0.5rem;
+      gap: 0.35rem;
+      justify-content: center;
+    }
+
+    body.watch-mode #controls select {
+      padding: 0.35rem 0.55rem;
+      font-size: 0.85em;
+    }
+
+    body.watch-mode #controls button {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.82em;
+      flex: 1 1 calc(50% - 0.35rem);
+    }
+
+    body.watch-mode #themeSearchContainer {
+      padding: 0.65rem !important;
+    }
+
+    body.watch-mode #themeSearchBar {
+      padding: 0.55rem 0.65rem !important;
+      font-size: 0.9em !important;
+    }
+
+    body.watch-mode .scroll-nav {
+      width: calc(100vw - 16px);
+      bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.watch-mode .scroll-nav button {
+      min-height: 38px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.88em;
+      max-width: none;
+    }
+
+    body.watch-mode .cat-summary-card,
+    body.watch-mode .cat-formulas-card,
+    body.watch-mode .cat-stats-card,
+    body.watch-mode .modal {
+      width: calc(100vw - 16px);
+      padding: 0.85rem;
+      border-radius: 12px;
+    }
+
+    body.watch-mode .cat-summary-header h2,
+    body.watch-mode .cat-formulas-header h2,
+    body.watch-mode .cat-stats-header h2 {
+      font-size: 1.05rem;
+    }
+
+    @media (shape: round) {
+      body.watch-mode .scroll-nav { width: calc(100vw - 18px); }
+    }
+
+    /* Téléphones : barre sticky moins gênante (plus petite + plus transparente) */
+    @media (max-width: 900px) and (hover: none) and (pointer: coarse) {
+      .scroll-nav {
+        width: calc(100vw - 16px);
+        bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .scroll-nav button {
+        min-height: 36px;
+        padding: 0.45rem 0.7rem;
+        font-size: 0.85em;
+        max-width: 220px;
+      }
+
+      #backToFicheBtn,
+      #backToThemesBtn {
+        background: rgba(13, 17, 23, 0.32) !important;
+        border-color: rgba(255, 255, 255, 0.14) !important;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35) !important;
+      }
+
+      .scroll-nav button::before { opacity: 0.25; }
+      .scroll-nav button::after { content: none; }
+    }
+
+    /* Fiabilise l’appui long (évite sélection/zoom contextuel) */
+    #courseTitle {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      touch-action: manipulation;
+    }
+
+    /* Petit toast discret (utilisé uniquement lors du toggle mode montre) */
+    .watch-toast {
+      position: fixed;
+      left: 50%;
+      top: 12px;
+      transform: translateX(-50%);
+      z-index: 10001;
+      padding: 0.55rem 0.75rem;
+      background: rgba(13, 17, 23, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      color: var(--text);
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.9em;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .watch-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
@@ -4718,6 +5050,122 @@ let answers = [];
 let showFiche = true;
 let globalRevisionActive = false;
 
+let scrollNavHideTimer = null;
+let scrollNavAutoHideInited = false;
+let scrollNavLastMouseMoveAt = 0;
+
+function isWatchLikeViewport() {
+  try {
+    if (document.body && document.body.classList.contains('watch-mode')) return true;
+    const w = Math.min(window.innerWidth || 0, window.innerHeight || 0);
+    const h = Math.max(window.innerWidth || 0, window.innerHeight || 0);
+    if (w === 0 || h === 0) return false;
+    const ratio = w / h;
+    const nearSquare = ratio > 0.85; // ~carré
+    const small = h <= 520;
+    return nearSquare && small;
+  } catch {
+    return false;
+  }
+}
+
+function shouldAutoHideScrollNav() {
+  try {
+    // Demande: même comportement sur PC/Mac -> auto-hide partout
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function getScrollNavAutoHideDelayMs() {
+  if (isWatchLikeViewport()) return 2200;
+  try {
+    const fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    const hover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+    if (fine && hover) return 4500; // desktop: un peu moins agressif
+  } catch {}
+  return 3500;
+}
+
+function clearScrollNavHideTimer() {
+  if (scrollNavHideTimer) {
+    clearTimeout(scrollNavHideTimer);
+    scrollNavHideTimer = null;
+  }
+}
+
+function scheduleScrollNavHide() {
+  if (!scrollNav) return;
+  clearScrollNavHideTimer();
+  scrollNavHideTimer = setTimeout(() => {
+    if (!scrollNav) return;
+    if (scrollNav.style.display === 'none') return;
+    if (!scrollNav.classList.contains('is-auto-hide')) return;
+    scrollNav.classList.add('is-hidden');
+  }, getScrollNavAutoHideDelayMs());
+}
+
+function revealScrollNavAndScheduleHide() {
+  if (!scrollNav) return;
+  if (scrollNav.style.display === 'none') return;
+  if (!scrollNav.classList.contains('is-auto-hide')) return;
+  scrollNav.classList.remove('is-hidden');
+  scheduleScrollNavHide();
+}
+
+function initScrollNavAutoHideListeners() {
+  if (scrollNavAutoHideInited) return;
+  scrollNavAutoHideInited = true;
+
+  window.addEventListener('scroll', () => {
+    revealScrollNavAndScheduleHide();
+  }, { passive: true });
+
+  window.addEventListener('pointerdown', () => {
+    revealScrollNavAndScheduleHide();
+  }, { passive: true });
+
+  window.addEventListener('keydown', () => {
+    revealScrollNavAndScheduleHide();
+  });
+
+  // Desktop: réapparition naturelle au wheel / mouvement souris
+  window.addEventListener('wheel', () => {
+    revealScrollNavAndScheduleHide();
+  }, { passive: true });
+
+  window.addEventListener('mousemove', () => {
+    const now = Date.now();
+    if (now - scrollNavLastMouseMoveAt < 180) return;
+    scrollNavLastMouseMoveAt = now;
+    revealScrollNavAndScheduleHide();
+  });
+
+  if (scrollNav) {
+    scrollNav.addEventListener('pointerdown', (e) => {
+      // Interaction directe: garder visible un peu plus longtemps
+      if (e && e.isPrimary === false) return;
+      revealScrollNavAndScheduleHide();
+    }, { passive: true });
+  }
+}
+
+function refreshScrollNavAutoHide() {
+  if (!scrollNav) return;
+  const enable = shouldAutoHideScrollNav();
+  scrollNav.classList.toggle('is-auto-hide', enable);
+  if (!enable) {
+    scrollNav.classList.remove('is-hidden');
+    clearScrollNavHideTimer();
+    return;
+  }
+  initScrollNavAutoHideListeners();
+  // visible au départ, puis auto-hide
+  scrollNav.classList.remove('is-hidden');
+  scheduleScrollNavHide();
+}
+
 function updateScrollNavOffset() {
   if (!scrollNav) return;
   const rect = scrollNav.getBoundingClientRect();
@@ -4738,14 +5186,18 @@ function toggleScrollNav(show) {
     requestAnimationFrame(() => {
       updateScrollNavOffset();
     });
+    refreshScrollNavAutoHide();
   } else {
     document.documentElement.style.setProperty('--scrollnav-offset', '0px');
+    scrollNav.classList.remove('is-auto-hide', 'is-hidden');
+    clearScrollNavHideTimer();
   }
 }
 
 window.addEventListener('resize', () => {
   if (scrollNav && scrollNav.style.display !== 'none') {
     updateScrollNavOffset();
+    refreshScrollNavAutoHide();
   }
 });
 
@@ -7030,6 +7482,130 @@ if (exportAllThemesBtn) {
   courseTitle.addEventListener('mouseleave', () => {
     courseTitle.style.opacity = '1';
   });
+})();
+
+// Mode montre manuel (écran rond WearOS) :
+// - URL: ?watch=1
+// - ou appui long (≈650ms) sur le titre
+(function setupWatchMode(){
+  const courseTitle = document.getElementById('courseTitle');
+  if (!courseTitle || !document.body) return;
+
+  // Fallback si ce fichier est intégré/concaténé et que les helpers ne sont pas disponibles
+  const safeGet = (typeof safeGetItem === 'function')
+    ? safeGetItem
+    : (key, fallback) => {
+        try {
+          const v = localStorage.getItem(key);
+          return v == null ? fallback : v;
+        } catch {
+          return fallback;
+        }
+      };
+
+  const safeSet = (typeof safeSetItem === 'function')
+    ? safeSetItem
+    : (key, value) => {
+        try {
+          localStorage.setItem(key, value);
+          return true;
+        } catch {
+          return false;
+        }
+      };
+
+  const STORAGE_KEY = 'watchModeEnabled';
+  const params = new URLSearchParams(window.location.search || '');
+  const forced = params.get('watch');
+  const fromStorage = safeGet(STORAGE_KEY, '0');
+
+  let didLongPress = false;
+  let pressTimer = null;
+  let toastTimer = null;
+
+  const getEnabled = () => document.body.classList.contains('watch-mode');
+
+  const ensureToast = () => {
+    let el = document.getElementById('watchToast');
+    if (el) return el;
+    el = document.createElement('div');
+    el.id = 'watchToast';
+    el.className = 'watch-toast';
+    el.textContent = '';
+    document.body.appendChild(el);
+    return el;
+  };
+
+  const showToast = (text) => {
+    const el = ensureToast();
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      el.classList.remove('show');
+    }, 1100);
+  };
+
+  const setEnabled = (enabled, { persist = true } = {}) => {
+    document.body.classList.toggle('watch-mode', !!enabled);
+    if (persist) safeSet(STORAGE_KEY, enabled ? '1' : '0');
+    if (typeof updateScrollNavOffset === 'function') {
+      requestAnimationFrame(() => updateScrollNavOffset());
+    }
+    if (typeof refreshScrollNavAutoHide === 'function') {
+      requestAnimationFrame(() => refreshScrollNavAutoHide());
+    }
+  };
+
+  // Init
+  if (forced === '1' || forced === 'true' || forced === 'on') {
+    setEnabled(true, { persist: false });
+  } else if (fromStorage === '1') {
+    setEnabled(true, { persist: false });
+  }
+
+  // Empêcher le clic (toggle cours) juste après un appui long
+  courseTitle.addEventListener('click', (e) => {
+    if (didLongPress) {
+      didLongPress = false;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+  }, true);
+
+  const clearPress = () => {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+    }
+  };
+
+  const onPressStart = () => {
+    didLongPress = false;
+    clearPress();
+    pressTimer = setTimeout(() => {
+      didLongPress = true;
+      const next = !getEnabled();
+      setEnabled(next);
+      showToast(next ? '⌚ Mode montre activé' : '⌚ Mode montre désactivé');
+    }, 650);
+  };
+
+  // Pointer (Chrome/Android/WearOS récents)
+  courseTitle.addEventListener('pointerdown', onPressStart);
+  courseTitle.addEventListener('pointerup', clearPress);
+  courseTitle.addEventListener('pointercancel', clearPress);
+  courseTitle.addEventListener('pointerleave', clearPress);
+
+  // Touch fallback (certains WebView/Wear)
+  courseTitle.addEventListener('touchstart', onPressStart, { passive: true });
+  courseTitle.addEventListener('touchend', clearPress, { passive: true });
+  courseTitle.addEventListener('touchcancel', clearPress, { passive: true });
+
+  // Mouse fallback (desktop)
+  courseTitle.addEventListener('mousedown', onPressStart);
+  courseTitle.addEventListener('mouseup', clearPress);
+  courseTitle.addEventListener('mouseleave', clearPress);
 })();
 
 // Supprimer une éventuelle bannière iOS "Ouvrir dans Safari" injectée par un webview
