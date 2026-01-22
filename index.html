@@ -194,6 +194,54 @@
     .category-action-btn.export { background: #3fb950; color: #fff; }
     .category-action-btn.summary { background: var(--accent); color: #000; }
 
+    .category-action-btn.summary.has-quiz-ongoing,
+    .category-action-btn.summary.has-quiz-completed {
+      position: relative;
+      padding-right: 2.15rem;
+    }
+
+    .category-action-btn.summary.has-quiz-ongoing::after,
+    .category-action-btn.summary.has-quiz-completed::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.25), 0 6px 16px rgba(0,0,0,0.25);
+    }
+
+    .category-action-btn.summary.has-quiz-ongoing::after {
+      background: #f59e0b;
+      animation: quiz-dot-pulse 1.35s ease-in-out infinite;
+    }
+
+    .category-action-btn.summary.has-quiz-completed::after {
+      background: #22c55e;
+      animation: none;
+    }
+
+    .category-action-btn.summary.has-quiz-ongoing::before,
+    .category-action-btn.summary.has-quiz-completed::before {
+      content: attr(data-quiz-progress);
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      font-size: 0.72em;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+
+    @keyframes quiz-dot-pulse {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.25); filter: brightness(1.2); }
+    }
+
     @media (max-width: 768px) {
       .category-header { flex-wrap: wrap; }
       .category-actions { flex-wrap: wrap; width: 100%; justify-content: flex-start; }
@@ -544,7 +592,31 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.07);
     }
 
+    #backToFicheBtn_summaryModal {
+      border-color: rgba(88, 166, 255, 0.35);
+      background:
+        radial-gradient(900px 220px at 20% 0%, rgba(88, 166, 255, 0.35), transparent 55%),
+        linear-gradient(180deg, rgba(88, 166, 255, 0.22) 0%, rgba(33, 38, 45, 0.88) 40%, rgba(13, 17, 23, 0.98) 100%);
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.48),
+        0 0 0 1px rgba(88, 166, 255, 0.12),
+        0 0 26px rgba(88, 166, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
     #backToThemesBtn {
+      border-color: rgba(167, 139, 250, 0.38);
+      background:
+        radial-gradient(900px 220px at 20% 0%, rgba(167, 139, 250, 0.34), transparent 55%),
+        linear-gradient(180deg, rgba(167, 139, 250, 0.20) 0%, rgba(33, 38, 45, 0.88) 40%, rgba(13, 17, 23, 0.98) 100%);
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.48),
+        0 0 0 1px rgba(167, 139, 250, 0.12),
+        0 0 26px rgba(167, 139, 250, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
+    #backToThemesBtn_summaryModal {
       border-color: rgba(167, 139, 250, 0.38);
       background:
         radial-gradient(900px 220px at 20% 0%, rgba(167, 139, 250, 0.34), transparent 55%),
@@ -579,7 +651,25 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
+    #backToFicheBtn_summaryModal:hover {
+      border-color: rgba(88, 166, 255, 0.85);
+      box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.56),
+        0 0 0 3px rgba(88, 166, 255, 0.18),
+        0 0 40px rgba(88, 166, 255, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
     #backToThemesBtn:hover {
+      border-color: rgba(167, 139, 250, 0.90);
+      box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.56),
+        0 0 0 3px rgba(167, 139, 250, 0.18),
+        0 0 42px rgba(167, 139, 250, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    #backToThemesBtn_summaryModal:hover {
       border-color: rgba(167, 139, 250, 0.90);
       box-shadow:
         0 24px 56px rgba(0, 0, 0, 0.56),
@@ -614,7 +704,25 @@
       border-color: rgba(88, 166, 255, 0.75);
     }
 
+    #backToFicheBtn_summaryModal:focus-visible {
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.48),
+        0 0 0 4px rgba(88, 166, 255, 0.26),
+        0 0 0 1px rgba(88, 166, 255, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      border-color: rgba(88, 166, 255, 0.75);
+    }
+
     #backToThemesBtn:focus-visible {
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.48),
+        0 0 0 4px rgba(167, 139, 250, 0.26),
+        0 0 0 1px rgba(167, 139, 250, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      border-color: rgba(167, 139, 250, 0.78);
+    }
+
+    #backToThemesBtn_summaryModal:focus-visible {
       box-shadow:
         0 18px 42px rgba(0, 0, 0, 0.48),
         0 0 0 4px rgba(167, 139, 250, 0.26),
@@ -768,6 +876,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .cat-summary-header {
@@ -829,6 +938,11 @@
       color: #000;
     }
 
+    .cat-summary-start.is-resume {
+      background: #fbbf24;
+      color: #000;
+    }
+
     .cat-summary-close {
       background: var(--incorrect);
       color: #fff;
@@ -848,8 +962,53 @@
     }
 
     .cat-summary-body {
-      padding: 1rem 1.25rem;
+      padding: 1rem 1.25rem 5.75rem;
       overflow: auto;
+    }
+
+    /* Boutons flottants dans le résumé (mêmes boutons que la page principale, mais dans le modal) */
+    .cat-summary-scroll-nav {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.25rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 12px;
+      width: min(980px, calc(100% - 24px));
+      z-index: 6;
+
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .cat-summary-scroll-nav button {
+      flex: 1 1 220px;
+      max-width: 280px;
+    }
+
+    @media (max-width: 640px) {
+      .cat-summary-scroll-nav { padding: 0.35rem; }
+      .cat-summary-scroll-nav button { flex-basis: 100%; max-width: none; }
+    }
+
+    .cat-summary-clear {
+      background: rgba(248, 81, 73, 0.16);
+      color: #fff;
+      border: 1px solid rgba(248, 81, 73, 0.28);
+    }
+
+    .cat-summary-clear[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.3);
     }
 
     .cat-summary-note {
@@ -916,6 +1075,256 @@
     .cat-summary-section li {
       color: var(--text);
       line-height: 1.5;
+    }
+
+    .cat-summary-section.is-definitions ul {
+      gap: 0.6rem;
+    }
+
+    .cat-summary-section.is-definitions li {
+      padding: 0.55rem 0.6rem;
+      border-radius: 10px;
+      background: rgba(88, 166, 255, 0.06);
+      border: 1px solid rgba(88, 166, 255, 0.18);
+    }
+
+    .cat-summary-section.is-definitions .def-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.42fr) 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .cat-summary-section.is-definitions .def-term {
+      font-weight: 950;
+      color: #c4b5fd;
+      line-height: 1.35;
+    }
+
+    .cat-summary-section.is-definitions .def-def {
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    body.watch-mode .cat-summary-section.is-definitions .def-row {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+
+    /* Glossaire (modal) */
+    .glossary-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 10010;
+    }
+    .glossary-card {
+      width: min(1100px, 96vw);
+      max-height: 90vh;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .glossary-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(90deg, rgba(88, 166, 255, 0.2), rgba(63, 185, 80, 0.12));
+      border-bottom: 1px solid var(--border);
+    }
+    .glossary-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 950;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      flex: 1;
+    }
+    .glossary-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .glossary-actions button {
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      font-weight: 900;
+      border: none;
+      cursor: pointer;
+    }
+    .glossary-close {
+      background: var(--incorrect);
+      color: #fff;
+    }
+    .glossary-body {
+      padding: 1rem 1.25rem;
+      overflow: auto;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .glossary-search {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .glossary-tools {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .glossary-tools button {
+      padding: 0.6rem 0.85rem;
+      border-radius: 10px;
+      font-weight: 900;
+      cursor: pointer;
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      background: rgba(88, 166, 255, 0.12);
+      color: var(--text);
+    }
+
+    .glossary-tools button.secondary {
+      border: 1px solid rgba(63, 185, 80, 0.25);
+      background: rgba(63, 185, 80, 0.12);
+    }
+
+    .glossary-tools button.danger {
+      border: 1px solid rgba(248, 81, 73, 0.35);
+      background: rgba(248, 81, 73, 0.14);
+    }
+
+    .glossary-panel {
+      border: 1px solid rgba(88, 166, 255, 0.18);
+      background: rgba(88, 166, 255, 0.06);
+      border-radius: 12px;
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .glossary-panel .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+
+    .glossary-panel label {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.9em;
+    }
+
+    .glossary-panel input,
+    .glossary-panel textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      color: var(--text);
+      border-radius: 10px;
+      outline: none;
+      font-size: 1em;
+    }
+
+    .glossary-panel textarea {
+      min-height: 90px;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .glossary-mini {
+      color: var(--muted);
+      font-size: 0.9em;
+      line-height: 1.35;
+    }
+
+    .glossary-missing-item {
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: rgba(248, 81, 73, 0.06);
+      border: 1px solid rgba(248, 81, 73, 0.18);
+    }
+
+    .glossary-missing-item .top {
+      display: flex;
+      gap: 0.6rem;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 0.35rem;
+    }
+
+    .glossary-missing-item .term {
+      font-weight: 950;
+      color: #ffd7d7;
+    }
+
+    .glossary-missing-item .count {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.9em;
+    }
+
+    .glossary-missing-item .snippet {
+      color: var(--text);
+      opacity: 0.92;
+      line-height: 1.45;
+    }
+    .glossary-search input {
+      flex: 1;
+      min-width: 260px;
+      padding: 0.8rem;
+      background: var(--bg);
+      border: 2px solid rgba(88, 166, 255, 0.35);
+      color: var(--text);
+      border-radius: 10px;
+      font-size: 1em;
+      outline: none;
+    }
+    .glossary-list {
+      display: grid;
+      gap: 0.6rem;
+    }
+    .glossary-item {
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(88, 166, 255, 0.08);
+      border: 1px solid rgba(88, 166, 255, 0.18);
+      cursor: pointer;
+    }
+    .glossary-item:hover {
+      filter: brightness(1.05);
+    }
+    .glossary-item .term {
+      font-weight: 950;
+      color: #c4b5fd;
+      margin-bottom: 0.35rem;
+    }
+    .glossary-item .def {
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .glossary-item .meta {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.9em;
+    }
+    body.watch-mode .glossary-card {
+      width: 98vw;
+      max-height: 92vh;
     }
 
     .cat-summary-toggle {
@@ -1564,6 +1973,7 @@
   <!-- Barre de recherche -->
   <div id="searchBarContainer" class="course-content" style="padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
     <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; min-width: 300px; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+    <button id="glossaryBtn" style="background: rgba(88, 166, 255, 0.18); color: #fff; border: 1px solid rgba(88, 166, 255, 0.35); padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 800; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📚 Glossaire</button>
     <button id="statsBtn" style="background: #f59e0b; color: #000; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📊 Statistiques</button>
     <button id="exportAllThemes" style="background: #3fb950; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📦 Exporter tous</button>
     <button id="globalRevisionBtn" style="background: #a78bfa; color: #000; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📚 Revisions Totales</button>
@@ -5346,6 +5756,52 @@ function getThemesByCategory(category) {
   return THEMES_VIEW.filter(t => t.category === category);
 }
 
+// Session de quiz “en cours” par catégorie (mémoire uniquement, pas de stockage)
+const CATEGORY_SUMMARY_QUIZ_SESSIONS = {};
+
+function getCategorySummaryQuizSession(category) {
+  return CATEGORY_SUMMARY_QUIZ_SESSIONS[String(category || '')] || null;
+}
+
+function setCategorySummaryQuizSession(category, session) {
+  CATEGORY_SUMMARY_QUIZ_SESSIONS[String(category || '')] = session;
+  updateCategorySummaryButtonVisual(category);
+}
+
+function clearCategorySummaryQuizSession(category) {
+  delete CATEGORY_SUMMARY_QUIZ_SESSIONS[String(category || '')];
+  updateCategorySummaryButtonVisual(category);
+}
+
+function updateCategorySummaryButtonVisual(category) {
+  const cat = String(category || '');
+  const all = Array.from(document.querySelectorAll('.category-action-btn.summary[data-category]'));
+  const btn = all.find(b => (b.dataset && b.dataset.category) === cat);
+  if (!btn) return;
+
+  const session = getCategorySummaryQuizSession(cat);
+  btn.classList.remove('has-quiz-ongoing', 'has-quiz-completed');
+  btn.removeAttribute('data-quiz-progress');
+
+  if (!session || !Array.isArray(session.questions) || session.questions.length === 0) {
+    btn.title = 'Voir un resumé complet des thèmes + lancer un quiz de 50 questions';
+    return;
+  }
+
+  const total = session.questions.length;
+  const answered = Array.isArray(session.answers) ? session.answers.filter(a => a !== null && a !== undefined).length : 0;
+  const progress = `${answered}/${total}`;
+  btn.setAttribute('data-quiz-progress', progress);
+
+  if (total > 0 && answered >= total) {
+    btn.classList.add('has-quiz-completed');
+    btn.title = `✅ Quiz terminé (${progress}). Ouvrir le resumé pour revoir.`;
+  } else {
+    btn.classList.add('has-quiz-ongoing');
+    btn.title = `⏳ Quiz en cours (${progress}). Ouvrir le resumé pour reprendre.`;
+  }
+}
+
 function emphasizeSummaryItem(item) {
   let html = String(item || '');
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="key-strong">$1</strong>');
@@ -5362,6 +5818,347 @@ function stripSummaryMarkup(text) {
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function normalizeGlossaryKey(term) {
+  return String(term || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s\/\-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const BREW_GLOSSARY_SEED = [
+  {
+    term: 'Pouvoir diastasique',
+    keys: ['pouvoir diastasique', 'diastasique', 'diastatic power'],
+    def: "Capacité d'un malt à fournir des enzymes (amylases) capables de convertir l'amidon en sucres fermentescibles (souvent exprimée en °Lintner ou WK)."
+  },
+  {
+    term: 'CIP',
+    keys: ['cip', 'clean in place', 'nep', 'nettoyage en place'],
+    def: "Nettoyage en place d'un équipement par circulation de solutions (rinçage, soude, acide, désinfection) sans démontage."
+  },
+  {
+    term: 'SIP',
+    keys: ['sip', 'sterilization in place', 'stérilisation en place'],
+    def: "Stérilisation/désinfection en place (souvent vapeur/eau chaude) réalisée après le nettoyage pour sécuriser l'hygiène."
+  },
+  {
+    term: 'IBU',
+    keys: ['ibu', 'international bitterness units'],
+    def: "Unité d'amertume: estimation liée aux iso-acides alpha, approximativement en mg/L (valeur influencée par l'ébullition et le process)."
+  },
+  {
+    term: 'Bittering (houblonnage d’amertume)',
+    keys: ['bittering', 'houblonnage amerisant', 'houblonnage amérisant', 'houblonnage d amertume', 'houblonnage d’amertume', 'addition amerisante', 'addition amérisante'],
+    def: "Ajout de houblon au début de l’ébullition pour apporter l’amertume (IBU) via l’isomérisation des acides alpha; très peu d’aromatique car les huiles volatiles s’évaporent."
+  },
+  {
+    term: 'EBC',
+    keys: ['ebc'],
+    def: "Échelle de couleur (European Brewery Convention) utilisée pour quantifier la couleur d'une bière ou d'un malt."
+  },
+  {
+    term: 'SRM',
+    keys: ['srm'],
+    def: "Échelle de couleur (Standard Reference Method), alternative à EBC."
+  },
+  {
+    term: 'Plato (°P)',
+    keys: ['plato', '°p', 'degre plato'],
+    def: "Mesure de la concentration en sucres du moût: 1°P ≈ 1% (m/m) d'extrait dissous."
+  },
+  {
+    term: 'Densité initiale (OG)',
+    keys: ['og', 'original gravity', 'densite initiale'],
+    def: "Densité du moût avant fermentation; sert à estimer la richesse en sucres et le potentiel alcool."
+  },
+  {
+    term: 'Densité finale (FG)',
+    keys: ['fg', 'final gravity', 'densite finale'],
+    def: "Densité après fermentation; reflète les sucres résiduels et le niveau d'atténuation."
+  },
+  {
+    term: 'Atténuation',
+    keys: ['attenuation', 'atténuation'],
+    def: "Part des sucres consommés par la levure entre OG et FG; plus elle est élevée, plus la bière est sèche."
+  },
+  {
+    term: 'FAN',
+    keys: ['fan', 'free amino nitrogen'],
+    def: "Azote assimilable (acides aminés) disponible pour la levure; un niveau insuffisant peut ralentir la fermentation."
+  },
+  {
+    term: 'Indice de Kolbach',
+    keys: ['kolbach', 'indice de kolbach'],
+    def: "Indicateur de modification du malt: rapport entre l'azote soluble/FAN et les protéines totales (plus haut = plus modifié)."
+  },
+  {
+    term: 'Crabtree',
+    keys: ['crabtree', 'effet crabtree'],
+    def: "Tendance de certaines levures à fermenter même en présence d'oxygène lorsque la concentration en sucres est élevée."
+  },
+  {
+    term: 'Hop creep',
+    keys: ['hop creep', 'hopcreep'],
+    def: "Reprise de fermentation après dry-hop due à des enzymes du houblon libérant des sucres fermentescibles."
+  },
+  {
+    term: 'Iso-acides alpha',
+    keys: ['iso alpha', 'iso-acides alpha', 'isoacides alpha'],
+    def: "Produits isomérisés des acides alpha du houblon formés à l'ébullition; principaux contributeurs à l'amertume."
+  },
+  {
+    term: 'Alpha-acides',
+    keys: ['alpha acides', 'alpha-acides', 'acides alpha', 'aa%'],
+    def: "Composés du houblon (AA%) dont l’isomérisation à l’ébullition produit les iso-acides alpha responsables de l’amertume."
+  },
+  {
+    term: 'Utilisation (houblon)',
+    keys: ['utilisation', 'utilization', 'rendement ibu'],
+    def: "Fraction des acides alpha convertie/extrait (dépend du temps, densité, forme du houblon, ébullition)."
+  },
+  {
+    term: 'BU:GU',
+    keys: ['bu:gu', 'bugu', 'bu gu'],
+    def: "Ratio amertume (BU≈IBU) / densité (GU) pour estimer l’équilibre entre amertume et sucrosité du moût."
+  },
+  {
+    term: 'Gushing',
+    keys: ['gushing'],
+    def: "Débordement/jaillissement incontrôlé à l’ouverture (sur-moussage), souvent lié à surpression, particules/noyaux de nucléation ou refermentation."
+  },
+  {
+    term: 'Surpression',
+    keys: ['surpression', 'sur-pression'],
+    def: "Pression trop élevée dans un contenant (danger de gushing/explosion), due à CO₂ excessif ou refermentation non maîtrisée."
+  },
+  {
+    term: 'CO₂',
+    keys: ['co2', 'dioxyde de carbone', 'gaz carbonique'],
+    def: "Gaz produit par la fermentation; responsable de la carbonatation et de la pression en bouteille/fût."
+  },
+  {
+    term: 'Dry hop',
+    keys: ['dry hop', 'dryhop', 'dry hopping', 'dry-hopping', 'houblonnage a cru', 'houblonnage à cru', 'houblonnage a froid', 'houblonnage à froid'],
+    def: "Ajout de houblon à froid (fermentation/conditionnement) pour booster l’aromatique sans augmenter fortement l’IBU; risques: oxygène, hop creep, pertes et astringence."
+  },
+  {
+    term: 'Dry hopping',
+    keys: ['dry hopping', 'dry-hopping', 'dry hop', 'dryhop', 'houblonnage à cru', 'houblonnage à froid'],
+    def: "Synonyme de dry hop: ajout de houblon à froid pour l’aromatique (pendant/fin de fermentation ou en garde), avec attention à l’oxydation et au hop creep."
+  },
+  {
+    term: 'Lupuline',
+    keys: ['lupuline', 'lupulin'],
+    def: "Poudre jaune dans les glandes du houblon, riche en résines (acides alpha) et huiles aromatiques."
+  },
+  {
+    term: 'Cryo (Lupulin Powder)',
+    keys: ['cryo', 'lupulin powder', 'lupulin'],
+    def: "Produit de houblon concentré en lupuline (moins de matière végétale) pour booster arôme/IBU avec moins de pertes."
+  },
+  {
+    term: 'Pellets T90 / T45',
+    keys: ['pellets', 'pellet', 't90', 't45'],
+    def: "Forme de houblon comprimé; T90 ≈ classique, T45 ≈ plus concentré (moins de matière végétale)."
+  },
+  {
+    term: 'NEIPA',
+    keys: ['neipa', 'new england ipa'],
+    def: "Style très houblonné (aromatique intense), souvent trouble; attention à l’oxydation et aux particules en suspension."
+  },
+  {
+    term: 'Astringence',
+    keys: ['astringence', 'astringent'],
+    def: "Sensation râpeuse/asséchante (polyphénols/tanins); peut augmenter avec contact prolongé de houblon ou extraction végétale."
+  },
+  {
+    term: 'Biotransformation',
+    keys: ['biotransformation', 'bio-transformation'],
+    def: "Transformation de composés du houblon par la levure (surtout en fermentation active), modifiant les arômes perçus."
+  },
+  {
+    term: 'Diacétyle',
+    keys: ['diacetyle', 'diacétyle', 'diasetyle', 'diacetyl', 'diacethyl'],
+    def: "Composé aromatique (note beurre/pop-corn) produit en fermentation; normalement réduit par la levure en fin (repos diacétyle)."
+  },
+  {
+    term: 'DMS',
+    keys: ['dms', 'dimethyl sulfide', 'diméthyl sulfure'],
+    def: "Défaut possible (maïs cuit) issu de précurseurs du malt; réduit par ébullition vigoureuse et refroidissement rapide."
+  },
+  {
+    term: 'Acétaldéhyde',
+    keys: ['acetaldehyde', 'acétaldéhyde'],
+    def: "Sous-produit de fermentation (pomme verte); diminue si la levure termine correctement la fermentation/conditionnement."
+  },
+  {
+    term: 'Esters',
+    keys: ['esters', 'ester'],
+    def: "Composés aromatiques (fruité) produits par la levure; influencés par souche, température, oxygénation et nutriments."
+  },
+  {
+    term: 'Alcools supérieurs (fusel)',
+    keys: ['alcools superieurs', 'alcools supérieurs', 'fusel'],
+    def: "Alcools au-delà de l'éthanol; à forte dose donnent des notes solvant/chaud. Dépendent de T°, stress levure et nutriments."
+  },
+  {
+    term: 'Whirlpool',
+    keys: ['whirlpool'],
+    def: "Étape de clarification par vortex après l'ébullition pour concentrer le trub au centre et clarifier le moût soutiré."
+  },
+  {
+    term: 'Trub',
+    keys: ['trub'],
+    def: "Dépôts (protéines, houblon, coagulations) formés à l'ébullition/refroidissement; impacte clarification et parfois fermentation."
+  }
+];
+
+function getBrewGlossarySeedIndex() {
+  return (BREW_GLOSSARY_SEED || [])
+    .map(e => {
+      const keys = (e.keys || []).map(k => normalizeGlossaryKey(k)).filter(Boolean);
+      const primaryKey = keys[0] || normalizeGlossaryKey(e.term);
+      return {
+        term: e.term,
+        def: e.def,
+        key: primaryKey,
+        keys
+      };
+    })
+    .filter(e => e.key && e.term && e.def);
+}
+
+function extractGlossaryPairFromPlainText(plainText) {
+  const t = String(plainText || '').replace(/\s+/g, ' ').trim();
+  if (!t) return null;
+
+  const isAllCapsAcronym = (s) => /^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8}$/.test(String(s || '').trim());
+
+  // 1) ACRONYME (Expansion) : ...  (ex: FAN (Free Amino Nitrogen): ...)
+  //    ou ACRONYME (Expansion) tout seul.
+  let m = t.match(/^([A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8})\s*\(([^)]+)\)\s*(?:(?:\:|=|→|\s-\s|\s–\s|\s—\s)\s*(.+))?$/);
+  if (m) {
+    const term = (m[1] || '').trim();
+    const expansion = (m[2] || '').trim();
+    const tail = (m[3] || '').trim();
+    const def = tail ? `${expansion} — ${tail}` : expansion;
+    if (term && def && def.length >= 3) return { term, def };
+  }
+
+  // 2) Terme : définition / Terme = définition / Terme → définition / Terme - définition
+  m = t.match(/^(.{2,90}?)\s*(?:\:|=|→|\s-\s|\s–\s|\s—\s)\s*(.{5,})$/);
+  if (m) {
+    let term = (m[1] || '').trim();
+    let def = (m[2] || '').trim();
+
+    // Ex: "1 IBU = ..." → terme = "IBU"
+    if (/^\d+\s+[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8}$/.test(term)) {
+      term = term.replace(/^\d+\s+/, '').trim();
+    }
+
+    // Cas “CIP - Clean In Place ... : ...” : si le terme est un acronyme court, on garde “CIP” comme terme.
+    const sub = term.match(/^([A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8})$/);
+    if (sub) {
+      term = sub[1];
+    }
+
+    // Nettoyages
+    term = term.replace(/^[-–—•\s]+/, '').replace(/\s+$/, '');
+    def = def.replace(/^[-–—•\s]+/, '').trim();
+
+    if (term && def) {
+      return { term, def };
+    }
+  }
+
+  // 3) Phrases de définition (plus fréquentes dans les cours)
+  // Ex: "Le pouvoir diastasique mesure ..." / "CIP correspond à ..." / "Un whirlpool désigne ..."
+  m = t.match(/^(?:Le|La|Les|L['’]|Un|Une)\s+(.{2,70}?)\s+(désigne|correspond à|représente|mesure|est|se définit comme)\s+(.{8,})$/i);
+  if (m) {
+    const term = (m[1] || '').trim();
+    const verb = (m[2] || '').trim();
+    const rest = (m[3] || '').trim();
+    if (term && rest) {
+      return { term, def: `${verb} ${rest}` };
+    }
+  }
+
+  // 4) Acronyme seul suivi d'une explication (rare mais utile)
+  // Ex: "CIP : ..." est déjà couvert, mais "CIP correspond à ..." peut arriver.
+  m = t.match(/^([A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8})\s+(désigne|correspond à|signifie)\s+(.{8,})$/i);
+  if (m) {
+    const term = (m[1] || '').trim();
+    const verb = (m[2] || '').trim();
+    const rest = (m[3] || '').trim();
+    if (term && rest) return { term, def: `${verb} ${rest}` };
+  }
+
+  // 5) Terme (petite explication) sans séparateur (utile pour "diacétyle (goût beurre)")
+  m = t.match(/^(.{2,45}?)\s*\((.{4,180}?)\)\s*$/);
+  if (m) {
+    const term = (m[1] || '').trim();
+    const def = (m[2] || '').trim();
+    if (term && def) {
+      // éviter les phrases
+      if (!/[\.!?]$/.test(term) && term.split(/\s+/).filter(Boolean).length <= 8) {
+        return { term, def };
+      }
+    }
+  }
+
+  return null;
+}
+
+function isLikelyStandaloneGlossaryTermLine(plainText) {
+  const t = String(plainText || '').replace(/\s+/g, ' ').trim();
+  if (!t) return false;
+
+  // Trop long = probablement une phrase.
+  if (t.length > 60) return false;
+
+  // Déjà une définition en format "Terme: ..." etc.
+  if (/(\:|=|→|\s-\s|\s–\s|\s—\s)/.test(t)) return false;
+
+  // Éviter les phrases (verbes courants / ponctuation finale)
+  if (/[\.!?]$/.test(t)) return false;
+  if (/\b(est|sont|correspond|désigne|mesure|définit|se définit|signifie)\b/i.test(t)) return false;
+
+  // Autoriser acronymes, ou 1-5 mots “nominal”
+  const words = t.split(/\s+/).filter(Boolean);
+  if (words.length === 0) return false;
+
+  const isAcronym = /^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8}$/.test(t);
+  if (isAcronym) return true;
+
+  if (words.length > 6) return false;
+  if (t.length < 3) return false;
+
+  // Éviter items trop “liste”
+  if (/^[-–—•\s]+/.test(t)) return false;
+
+  // On accepte les termes techniques qui contiennent slash ou acronymes internes
+  if (/[A-Z]{2,}/.test(t)) return true;
+  if (/[\/_]/.test(t)) return true;
+
+  return true;
+}
+
+function isLikelyDefinitionLine(plainText) {
+  const t = String(plainText || '').replace(/\s+/g, ' ').trim();
+  if (!t) return false;
+  if (t.length < 12) return false;
+
+  // Indices de définition/explication
+  if (/(désigne|correspond à|représente|mesure|se définit|signifie|c['’]est|on appelle)/i.test(t)) return true;
+  if (/[\(\)]/.test(t)) return true;
+  if (/\b\d+(?:[\.,]\d+)?\s?(?:°c|%|ibu|ebc|srm|mg\/l|g\/l|ppm|min|h|°p)\b/i.test(t)) return true;
+  if (t.length >= 24) return true;
+  return false;
 }
 
 function classifySummaryItem(plainText) {
@@ -5386,7 +6183,6 @@ function collectThemeFicheItems(theme) {
   });
   return out;
 }
-
 function buildStructuredBucketsFromThemes(themes, options = {}) {
   const limitPerBucket = options.limitPerBucket ?? 10;
   const includeSourceTags = options.includeSourceTags ?? false;
@@ -5398,12 +6194,51 @@ function buildStructuredBucketsFromThemes(themes, options = {}) {
     'Méthode / process': []
   };
 
+  const defMap = new Map(); // key -> { term, html, score }
+  const defFallback = [];
+
+  const isGenericTerm = (term) => {
+    const tl = String(term || '').toLowerCase().trim();
+    const generic = new Set([
+      'objectif', 'exemple', 'calcul', 'résultat', 'résultats', 'note', 'nb',
+      'attention', 'vigilance', 'conséquences', 'impact', 'méthode', 'process',
+      'formule', 'définition', 'définitions', 'principe', 'conclusion',
+      'avantage', 'inconvénient', 'important', 'remarque'
+    ]);
+    if (generic.has(tl)) return true;
+    if (tl.length <= 1) return false; // géré ailleurs
+    return false;
+  };
+
+  const isShortAcronym = (term) => /^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8}$/.test(String(term || '').trim());
+
+  const scoreDefinition = (term, def) => {
+    const d = String(def || '');
+    const len = d.length;
+    let score = 0;
+    if (isShortAcronym(term)) score += 2;
+    if (len >= 20 && len <= 240) score += 3;
+    if (len >= 10 && len < 20) score += 1;
+    if (/[\(\)]/.test(d)) score += 1;
+    if (/(\bibu\b|\bebc\b|\bsrm\b|mg\/l|g\/l|ppm|°c|°p|\bplato\b|\bco2\b)/i.test(d)) score += 1;
+    if (len > 400) score -= 2;
+    if (len < 10) score -= 2;
+    return score;
+  };
+
   const seen = new Set();
+  const allTextParts = [];
   for (const theme of themes) {
     const items = collectThemeFicheItems(theme);
-    for (const entry of items) {
+    const consumed = new Set();
+    for (let i = 0; i < items.length; i++) {
+      if (consumed.has(i)) continue;
+      const entry = items[i];
       const plain = stripSummaryMarkup(entry.item);
       if (!plain) continue;
+
+      allTextParts.push(plain);
+      if (entry.sectionTitle) allTextParts.push(stripSummaryMarkup(entry.sectionTitle));
 
       const key = (plain + '|' + (entry.sectionTitle || '') + '|' + (includeSourceTags ? (theme.title || '') : '')).toLowerCase();
       if (seen.has(key)) continue;
@@ -5411,7 +6246,6 @@ function buildStructuredBucketsFromThemes(themes, options = {}) {
 
       const bucket = classifySummaryItem(plain);
       if (!buckets[bucket]) continue;
-      if (buckets[bucket].length >= limitPerBucket) continue;
 
       let suffix = '';
       if (entry.sectionTitle) {
@@ -5421,8 +6255,122 @@ function buildStructuredBucketsFromThemes(themes, options = {}) {
         suffix += ` <span style="color: var(--muted); font-size: 0.85em;">(${theme.title})</span>`;
       }
 
-      buckets[bucket].push(emphasizeSummaryItem(entry.item) + suffix);
+      // Glossaire “Définitions” : extraire Terme → explication, en ciblant vocabulaire technique.
+      let pair = extractGlossaryPairFromPlainText(plain);
+
+      // Support "Terme" sur une ligne puis "explication" sur la suivante (souvent dans les cours)
+      if (!pair && isLikelyStandaloneGlossaryTermLine(plain)) {
+        const next = items[i + 1];
+        if (next && String(next.sectionTitle || '') === String(entry.sectionTitle || '')) {
+          const nextPlain = stripSummaryMarkup(next.item);
+          if (nextPlain && isLikelyDefinitionLine(nextPlain)) {
+            // Construire un candidat simple "Terme : explication"
+            pair = extractGlossaryPairFromPlainText(`${plain} : ${nextPlain}`);
+            if (pair) {
+              consumed.add(i + 1);
+            }
+          }
+        }
+      }
+
+      if (pair && pair.term && pair.def) {
+        const term = String(pair.term).trim();
+        const def = String(pair.def).trim();
+
+        // Filtrage anti-bruit : garder les acronymes / termes raisonnables, éviter les mots trop génériques.
+        const wordCount = term.split(/\s+/).filter(Boolean).length;
+        const acronym = isShortAcronym(term);
+        if (!acronym && isGenericTerm(term)) {
+          // ignore
+        } else if (!acronym && wordCount > 10) {
+          // ignore
+        } else if (!acronym && term.length < 3) {
+          // ignore
+        } else {
+          const keyTerm = normalizeGlossaryKey(term);
+          if (keyTerm) {
+            const termHtml = escapeHtml(term);
+            const defHtml = emphasizeSummaryItem(def) + suffix;
+            const html = `<div class="def-row"><div class="def-term">${termHtml}</div><div class="def-def">${defHtml}</div></div>`;
+            const score = scoreDefinition(term, def);
+            const prev = defMap.get(keyTerm);
+            if (!prev) {
+              if (defMap.size < limitPerBucket) {
+                defMap.set(keyTerm, { term, html, score });
+              }
+            } else if (score > prev.score) {
+              defMap.set(keyTerm, { term, html, score });
+            }
+          }
+        }
+      } else if (bucket === 'Définitions') {
+        // Fallback: si on a classé en Définition mais pas de “Terme: …”, on garde quand même la ligne.
+        if (defFallback.length < limitPerBucket) {
+          defFallback.push(emphasizeSummaryItem(entry.item) + suffix);
+        }
+      }
+
+      // Remplissage des autres sections
+      if (bucket !== 'Définitions') {
+        if (buckets[bucket].length >= limitPerBucket) continue;
+        buckets[bucket].push(emphasizeSummaryItem(entry.item) + suffix);
+      }
     }
+  }
+
+  // Injection glossaire (seed + définitions extraites) si un terme est présent mais pas défini explicitement
+  if (defMap.size < limitPerBucket) {
+    const normHaystack = normalizeGlossaryKey(allTextParts.join(' | '));
+    let glossaryEntries = (GLOBAL_GLOSSARY_INDEX && GLOBAL_GLOSSARY_INDEX.length) ? GLOBAL_GLOSSARY_INDEX : [];
+    if ((!glossaryEntries || glossaryEntries.length === 0) && typeof buildGlobalGlossaryIndex === 'function') {
+      try {
+        GLOBAL_GLOSSARY_INDEX = buildGlobalGlossaryIndex();
+        glossaryEntries = GLOBAL_GLOSSARY_INDEX;
+      } catch {
+        glossaryEntries = [];
+      }
+    }
+
+    for (const g of (glossaryEntries || [])) {
+      if (defMap.size >= limitPerBucket) break;
+      const key = g.key;
+      if (!key) continue;
+
+      // Match sur l'une des clés/synonymes
+      const keys = (g.keys && g.keys.length) ? g.keys : [key];
+      const hit = keys.some(k => {
+        if (!k) return false;
+        try {
+          // Limites “word boundary” robustes (les clés peuvent contenir espaces / tirets / slash)
+          return new RegExp(`(^|[^a-z0-9])${escapeRegExp(k)}([^a-z0-9]|$)`, 'i').test(normHaystack);
+        } catch {
+          return normHaystack.includes(k);
+        }
+      });
+      if (!hit) continue;
+
+      const normKey = key;
+      const termHtml = escapeHtml(g.term);
+      const defText = g.defFull || g.shortDef || '';
+      const defHtml = emphasizeSummaryItem(defText);
+      const html = `<div class="def-row"><div class="def-term">${termHtml}</div><div class="def-def">${defHtml}</div></div>`;
+
+      const score = 10 + scoreDefinition(g.term, defText);
+      const prev = defMap.get(normKey);
+      if (!prev) {
+        defMap.set(normKey, { term: g.term, html, score });
+      } else if (score > prev.score) {
+        defMap.set(normKey, { term: g.term, html, score });
+      }
+    }
+  }
+
+  // Finaliser la section Définitions (glossaire) : d'abord les paires, puis le fallback
+  buckets['Définitions'] = Array.from(defMap.values())
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .map(x => x.html);
+  if (buckets['Définitions'].length < limitPerBucket && defFallback.length) {
+    buckets['Définitions'].push(...defFallback.slice(0, limitPerBucket - buckets['Définitions'].length));
   }
 
   return buckets;
@@ -5431,6 +6379,9 @@ function buildStructuredBucketsFromThemes(themes, options = {}) {
 function renderSummaryBucket(titleText, htmlItems, emptyText) {
   const secDiv = document.createElement('div');
   secDiv.className = 'cat-summary-section';
+
+  const isDefinitions = /d[ée]finitions/i.test(String(titleText || ''));
+  if (isDefinitions) secDiv.classList.add('is-definitions');
 
   const h5 = document.createElement('h5');
   h5.textContent = titleText;
@@ -5448,7 +6399,7 @@ function renderSummaryBucket(titleText, htmlItems, emptyText) {
   const ul = document.createElement('ul');
   htmlItems.forEach(h => {
     const li = document.createElement('li');
-    li.innerHTML = '• ' + h;
+    li.innerHTML = isDefinitions ? h : ('• ' + h);
     ul.appendChild(li);
   });
   secDiv.appendChild(ul);
@@ -5626,6 +6577,32 @@ function generateCategorySummaryHtmlDocument(category) {
       background: #fff;
       border-left: 3px solid #e5e7eb;
       border-radius: 8px;
+    }
+
+    .def-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.42fr) 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f6faff;
+      border: 1px solid #dbeafe;
+    }
+
+    .def-term {
+      font-weight: 900;
+      color: #3730a3;
+      line-height: 1.35;
+    }
+
+    .def-def {
+      color: #111827;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 680px) {
+      .def-row { grid-template-columns: 1fr; gap: 6px; }
     }
     @media print {
       body { background: white; padding: 0; }
@@ -6558,6 +7535,12 @@ function showCategorySummary(category) {
   fsBtn.textContent = '🖥️ Plein écran';
   fsBtn.title = 'Mettre cette fenêtre en plein écran';
 
+  const clearSessionBtn = document.createElement('button');
+  clearSessionBtn.className = 'cat-summary-clear';
+  clearSessionBtn.textContent = '🧹';
+  clearSessionBtn.title = 'Effacer le quiz en cours (dans cette session)';
+  clearSessionBtn.disabled = true;
+
   const startBtn = document.createElement('button');
   startBtn.className = 'cat-summary-start';
   startBtn.textContent = '▶ Lancer quiz (50 Q)';
@@ -6569,6 +7552,7 @@ function showCategorySummary(category) {
 
   actions.appendChild(exportBtn);
   actions.appendChild(fsBtn);
+  actions.appendChild(clearSessionBtn);
   actions.appendChild(startBtn);
   actions.appendChild(closeBtn);
 
@@ -6590,6 +7574,384 @@ function showCategorySummary(category) {
   }
   body.appendChild(note);
 
+  // Wrapper: contenu du résumé (sert aussi de “fiche” quand on lance le quiz dans le modal)
+  const summaryWrap = document.createElement('div');
+  summaryWrap.className = 'cat-summary-summaryWrap';
+  summaryWrap.style.display = 'block';
+
+  // Wrapper: vue quiz dans le modal (masqué par défaut)
+  const quizWrap = document.createElement('div');
+  quizWrap.className = 'cat-summary-quizWrap';
+  quizWrap.style.display = 'none';
+
+  const quizTools = document.createElement('div');
+  quizTools.className = 'cat-summary-chips';
+  quizTools.style.marginTop = '0.75rem';
+
+  const backToSummaryBtn = document.createElement('button');
+  backToSummaryBtn.className = 'cat-summary-chip';
+  backToSummaryBtn.textContent = '↩️ Retour au résumé';
+
+  const toggleFicheInModalBtn = document.createElement('button');
+  toggleFicheInModalBtn.className = 'cat-summary-chip';
+  toggleFicheInModalBtn.textContent = '👁️ Afficher la fiche';
+
+  const toggleSearchInModalBtn = document.createElement('button');
+  toggleSearchInModalBtn.className = 'cat-summary-chip';
+  toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+
+  const revisionInModalBtn = document.createElement('button');
+  revisionInModalBtn.className = 'cat-summary-chip';
+  revisionInModalBtn.textContent = '📚 Révisions (ratées)';
+
+  const resetInModalBtn = document.createElement('button');
+  resetInModalBtn.className = 'cat-summary-chip';
+  resetInModalBtn.textContent = '♻️ Réinitialiser quiz';
+
+  quizTools.appendChild(backToSummaryBtn);
+  quizTools.appendChild(revisionInModalBtn);
+  quizTools.appendChild(toggleFicheInModalBtn);
+  quizTools.appendChild(toggleSearchInModalBtn);
+  quizTools.appendChild(resetInModalBtn);
+
+  const modalSearchRow = document.createElement('div');
+  modalSearchRow.style.display = 'none';
+  modalSearchRow.style.marginTop = '0.6rem';
+  const modalSearch = document.createElement('input');
+  modalSearch.type = 'text';
+  modalSearch.placeholder = '🔍 Rechercher dans la fiche (résumé)…';
+  modalSearch.style.width = '100%';
+  modalSearch.style.padding = '0.8rem';
+  modalSearch.style.background = 'var(--bg)';
+  modalSearch.style.border = '2px solid rgba(88, 166, 255, 0.35)';
+  modalSearch.style.color = 'var(--text)';
+  modalSearch.style.borderRadius = '10px';
+  modalSearchRow.appendChild(modalSearch);
+
+  const modalProgress = document.createElement('div');
+  modalProgress.style.marginTop = '0.75rem';
+  modalProgress.style.color = 'var(--muted)';
+  modalProgress.style.fontWeight = '800';
+  modalProgress.textContent = '';
+
+  const modalQuizContainer = document.createElement('div');
+  modalQuizContainer.className = 'course-content';
+  modalQuizContainer.style.padding = '0';
+  modalQuizContainer.style.marginTop = '0.75rem';
+
+  quizWrap.appendChild(quizTools);
+  quizWrap.appendChild(modalSearchRow);
+  quizWrap.appendChild(modalProgress);
+  quizWrap.appendChild(modalQuizContainer);
+
+  // État du quiz embarqué (indépendant de la page principale)
+  let embeddedRevision = false;
+  let embeddedQuestions = [];
+  let embeddedAnswers = [];
+
+  const applyStartBtnState = () => {
+    const session = getCategorySummaryQuizSession(category);
+    const hasSession = !!(session && Array.isArray(session.questions) && session.questions.length);
+    if (!hasSession) {
+      startBtn.textContent = '▶ Lancer quiz (50 Q)';
+      startBtn.title = 'Lancer le quiz dans cette fenêtre';
+      startBtn.classList.remove('is-resume');
+      clearSessionBtn.disabled = true;
+      return;
+    }
+    const total = session.questions.length;
+    const answered = Array.isArray(session.answers) ? session.answers.filter(a => a !== null && a !== undefined).length : 0;
+    startBtn.textContent = '↩️ Reprendre quiz';
+    startBtn.title = `Reprendre le quiz en cours (${answered}/${total}) dans cette fenêtre`;
+    startBtn.classList.add('is-resume');
+    clearSessionBtn.disabled = false;
+  };
+
+  const syncEmbeddedSession = () => {
+    if (!embeddedQuestions || embeddedQuestions.length === 0) {
+      clearCategorySummaryQuizSession(category);
+      applyStartBtnState();
+      return;
+    }
+    setCategorySummaryQuizSession(category, {
+      embeddedRevision: !!embeddedRevision,
+      questions: embeddedQuestions,
+      answers: embeddedAnswers,
+      updatedAt: Date.now()
+    });
+    applyStartBtnState();
+  };
+
+  // Si un quiz existe déjà pour cette catégorie, on le recharge (pour permettre “Reprendre quiz”)
+  const existingSession = getCategorySummaryQuizSession(category);
+  if (existingSession && Array.isArray(existingSession.questions) && existingSession.questions.length) {
+    embeddedRevision = !!existingSession.embeddedRevision;
+    embeddedQuestions = existingSession.questions.slice();
+    if (Array.isArray(existingSession.answers) && existingSession.answers.length === embeddedQuestions.length) {
+      embeddedAnswers = existingSession.answers.slice();
+    } else {
+      embeddedAnswers = new Array(embeddedQuestions.length).fill(null);
+    }
+  }
+
+  applyStartBtnState();
+
+  clearSessionBtn.addEventListener('click', () => {
+    if (clearSessionBtn.disabled) return;
+    if (!confirm('🧹 Effacer la session de quiz de cette catégorie (progrès du quiz dans le résumé) ?')) return;
+    embeddedRevision = false;
+    embeddedQuestions = [];
+    embeddedAnswers = [];
+    clearCategorySummaryQuizSession(category);
+
+    quizWrap.style.display = 'none';
+    summaryWrap.style.display = 'block';
+    modalSearchRow.style.display = 'none';
+    toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+    modalSearch.value = '';
+    filterSummaryInModal();
+    modalProgress.textContent = '';
+    modalQuizContainer.innerHTML = '';
+    applyStartBtnState();
+  });
+
+  const filterSummaryInModal = () => {
+    const q = normalizeGlossaryKey(modalSearch.value);
+    const blocks = Array.from(summaryWrap.querySelectorAll('.cat-summary-theme'));
+    if (!q) {
+      blocks.forEach(b => (b.style.display = ''));
+      return;
+    }
+    blocks.forEach(b => {
+      const txt = normalizeGlossaryKey(stripSummaryMarkup(b.textContent || ''));
+      b.style.display = txt.includes(q) ? '' : 'none';
+    });
+  };
+
+  modalSearch.addEventListener('input', filterSummaryInModal);
+
+  const renderEmbeddedQuiz = () => {
+    modalQuizContainer.innerHTML = '';
+    if (!embeddedQuestions || embeddedQuestions.length === 0) {
+      modalQuizContainer.innerHTML = "<p style='text-align:center;padding:1.25rem;color:var(--muted);'>Aucune question à afficher.</p>";
+      modalProgress.textContent = '';
+      syncEmbeddedSession();
+      return;
+    }
+
+    const answered = embeddedAnswers.filter(a => a !== null).length;
+    const correct = embeddedAnswers.filter((a, i) => a === embeddedQuestions[i].correctIndex).length;
+    const labelPrefix = embeddedRevision ? `Révisions ${category} — ` : `Quiz ${category} — `;
+    modalProgress.textContent = `${labelPrefix}Tentées: ${answered}/${embeddedQuestions.length} • Correctes: ${correct}`;
+
+    // Met à jour le “visuel” du bouton Résumé + le bouton de lancement
+    syncEmbeddedSession();
+
+    embeddedQuestions.forEach((q, idx) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      const h3 = document.createElement('h3');
+      h3.textContent = `${idx + 1}. ${q.question}`;
+      div.appendChild(h3);
+
+      const optDiv = document.createElement('div');
+      optDiv.className = 'options';
+      (q.options || []).forEach((opt, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt;
+        if (embeddedAnswers[idx] !== null) {
+          if (optIdx === q.correctIndex) btn.classList.add('correct');
+          else if (optIdx === embeddedAnswers[idx]) btn.classList.add('incorrect');
+        }
+        btn.onclick = () => {
+          if (embeddedAnswers[idx] === null) {
+            embeddedAnswers[idx] = optIdx;
+
+            // Suivre les questions ratées au niveau thème (pour révisions)
+            const failureTheme = q.sourceThemeId;
+            const failureIndex = (q.originalIndex !== undefined ? q.originalIndex : idx);
+            if (failureTheme) {
+              if (optIdx !== q.correctIndex) addFailedQuestion(failureTheme, failureIndex);
+              else removeFailedQuestion(failureTheme, failureIndex);
+            }
+
+            renderEmbeddedQuiz();
+          }
+        };
+        optDiv.appendChild(btn);
+      });
+      div.appendChild(optDiv);
+
+      if (q.sourceThemeTitle) {
+        const tag = document.createElement('div');
+        tag.style.color = 'var(--muted)';
+        tag.style.marginBottom = '0.5rem';
+        tag.style.fontSize = '0.9em';
+        tag.textContent = `Thème : ${q.sourceThemeTitle}`;
+        div.prepend(tag);
+      }
+
+      if (embeddedAnswers[idx] !== null) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation';
+        exp.innerHTML = `✓ <strong>Explication:</strong> ${q.explanation}`;
+        div.appendChild(exp);
+      }
+
+      modalQuizContainer.appendChild(div);
+    });
+  };
+
+  const buildCategoryRevisionQuestionsForModal = () => {
+    const th = getThemesByCategory(category);
+    const failed = JSON.parse(safeGetItem('failedQuestions', '{}') || '{}');
+    const aggregated = [];
+    th.forEach(theme => {
+      const indices = failed[theme.id] || [];
+      indices.forEach(idx => {
+        const base = theme.questions && theme.questions[idx];
+        if (!base) return;
+        const optionsWithIndex = base.options.map((opt, idOpt) => ({ opt, idOpt }));
+        const shuffledOptions = shuffle(optionsWithIndex);
+        const newCorrectIndex = shuffledOptions.findIndex(item => item.idOpt === base.correctIndex);
+        aggregated.push({
+          question: base.question,
+          options: shuffledOptions.map(item => item.opt),
+          correctIndex: newCorrectIndex,
+          explanation: base.explanation,
+          sourceThemeId: theme.id,
+          sourceThemeTitle: theme.title,
+          originalIndex: idx
+        });
+      });
+    });
+    return aggregated;
+  };
+
+  const enterQuizView = (questions, isRevision) => {
+    embeddedRevision = !!isRevision;
+    embeddedQuestions = Array.isArray(questions) ? questions.slice() : [];
+    embeddedAnswers = new Array(embeddedQuestions.length).fill(null);
+
+    // Par défaut: on cache la “fiche” (résumé) + la recherche pour se concentrer sur le quiz
+    summaryWrap.style.display = 'none';
+    toggleFicheInModalBtn.textContent = '👁️ Afficher la fiche';
+    modalSearchRow.style.display = 'none';
+    toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+    modalSearch.value = '';
+    filterSummaryInModal();
+
+    quizWrap.style.display = 'block';
+    renderEmbeddedQuiz();
+    try { modalQuizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch {}
+  };
+
+  const openExistingQuizView = () => {
+    // Par défaut: on cache la “fiche” + la recherche (comme au lancement)
+    summaryWrap.style.display = 'none';
+    toggleFicheInModalBtn.textContent = '👁️ Afficher la fiche';
+    modalSearchRow.style.display = 'none';
+    toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+    quizWrap.style.display = 'block';
+    renderEmbeddedQuiz();
+    try { modalQuizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch {}
+  };
+
+  // Boutons flottants (comme ceux de la page principale)
+  const modalScrollNav = document.createElement('div');
+  modalScrollNav.className = 'scroll-nav cat-summary-scroll-nav';
+
+  const modalBackToFicheBtn = document.createElement('button');
+  modalBackToFicheBtn.id = 'backToFicheBtn_summaryModal';
+  modalBackToFicheBtn.textContent = '⬆️ Revenir à la fiche';
+
+  const modalBackToQuestionsBtn = document.createElement('button');
+  modalBackToQuestionsBtn.id = 'backToThemesBtn_summaryModal';
+  modalBackToQuestionsBtn.textContent = '⬆️ Revenir aux questions';
+
+  modalScrollNav.appendChild(modalBackToFicheBtn);
+  modalScrollNav.appendChild(modalBackToQuestionsBtn);
+
+  const goToFicheInModal = () => {
+    quizWrap.style.display = 'none';
+    summaryWrap.style.display = 'block';
+    applyStartBtnState();
+    try { summaryWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch {}
+  };
+
+  const goToQuestionsInModal = () => {
+    // Si on a déjà un quiz en cours, on l’ouvre; sinon on le démarre
+    if (embeddedQuestions && embeddedQuestions.length > 0) {
+      openExistingQuizView();
+      return;
+    }
+    if (!quizQuestions || quizQuestions.length === 0) {
+      alert('⚠️ Aucune question disponible pour cette catégorie (quiz vide).');
+      return;
+    }
+    enterQuizView(quizQuestions, false);
+  };
+
+  modalBackToFicheBtn.addEventListener('click', goToFicheInModal);
+  modalBackToQuestionsBtn.addEventListener('click', goToQuestionsInModal);
+
+  backToSummaryBtn.addEventListener('click', () => {
+    quizWrap.style.display = 'none';
+    summaryWrap.style.display = 'block';
+    modalSearchRow.style.display = 'none';
+    toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+    modalSearch.value = '';
+    filterSummaryInModal();
+    applyStartBtnState();
+    try { body.scrollTop = 0; } catch {}
+  });
+
+  toggleFicheInModalBtn.addEventListener('click', () => {
+    const willShow = summaryWrap.style.display === 'none';
+    summaryWrap.style.display = willShow ? 'block' : 'none';
+    toggleFicheInModalBtn.textContent = willShow ? '🙈 Masquer la fiche' : '👁️ Afficher la fiche';
+    if (!willShow) {
+      modalSearchRow.style.display = 'none';
+      toggleSearchInModalBtn.textContent = '🔍 Afficher recherche';
+      modalSearch.value = '';
+      filterSummaryInModal();
+    } else {
+      try { summaryWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch {}
+    }
+  });
+
+  toggleSearchInModalBtn.addEventListener('click', () => {
+    const canShow = summaryWrap.style.display !== 'none';
+    if (!canShow) {
+      summaryWrap.style.display = 'block';
+      toggleFicheInModalBtn.textContent = '🙈 Masquer la fiche';
+    }
+    const open = modalSearchRow.style.display !== 'none';
+    modalSearchRow.style.display = open ? 'none' : 'block';
+    toggleSearchInModalBtn.textContent = open ? '🔍 Afficher recherche' : '🙈 Masquer recherche';
+    if (open) {
+      modalSearch.value = '';
+      filterSummaryInModal();
+    } else {
+      setTimeout(() => { try { modalSearch.focus(); } catch {} }, 0);
+    }
+  });
+
+  revisionInModalBtn.addEventListener('click', () => {
+    const aggregated = buildCategoryRevisionQuestionsForModal();
+    if (!aggregated || aggregated.length === 0) {
+      alert('🎉 Aucune question ratée à réviser pour cette catégorie.');
+      return;
+    }
+    enterQuizView(aggregated, true);
+  });
+
+  resetInModalBtn.addEventListener('click', () => {
+    embeddedAnswers = new Array((embeddedQuestions || []).length).fill(null);
+    renderEmbeddedQuiz();
+  });
+
   // 1) Synthèse structurée (transversale) pour la catégorie
   const globalBlock = document.createElement('div');
   globalBlock.className = 'cat-summary-theme';
@@ -6609,7 +7971,7 @@ function showCategorySummary(category) {
   globalBlock.appendChild(renderSummaryBucket('Points de vigilance', catBuckets['Points de vigilance'], 'Aucun point de vigilance détecté.'));
   globalBlock.appendChild(renderSummaryBucket('Définitions', catBuckets['Définitions'], 'Aucune définition détectée.'));
   globalBlock.appendChild(renderSummaryBucket('Méthode / process', catBuckets['Méthode / process'], 'Aucun point “méthode / process” détecté.'));
-  body.appendChild(globalBlock);
+  summaryWrap.appendChild(globalBlock);
 
   // 2) Synthèse par thème (avec sélection de points clés + option "voir tout")
   themes.forEach(theme => {
@@ -6659,33 +8021,29 @@ function showCategorySummary(category) {
     themeBlock.appendChild(toggleBtn);
     themeBlock.appendChild(allWrap);
 
-    body.appendChild(themeBlock);
+    summaryWrap.appendChild(themeBlock);
   });
 
+  body.appendChild(summaryWrap);
+  body.appendChild(quizWrap);
+
   startBtn.addEventListener('click', () => {
+    // Si un quiz est déjà en cours (dans cette session mémoire), on le reprend
+    if (embeddedQuestions && embeddedQuestions.length > 0) {
+      openExistingQuizView();
+      return;
+    }
     if (!quizQuestions || quizQuestions.length === 0) {
       alert('⚠️ Aucune question disponible pour cette catégorie (quiz vide).');
       return;
     }
-    globalRevisionActive = true;
-    revisionModeActive = false;
-    if (revisionBtn) {
-      revisionBtn.style.background = '#a78bfa';
-      revisionBtn.textContent = '🔄 Mode révision';
-    }
-
-    currentTheme = { id: `__cat_summary__${category}__`, title: `Resumé ${category} — Synthèse`, category };
-    currentQuestions = quizQuestions;
-    answers = new Array(quizQuestions.length).fill(null);
-    backdrop.remove();
-    renderQuiz();
-    if (quizContainer && quizContainer.scrollIntoView) {
-      quizContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // Sinon, on démarre un nouveau quiz DANS le modal
+    enterQuizView(quizQuestions, false);
   });
 
   card.appendChild(header);
   card.appendChild(body);
+  card.appendChild(modalScrollNav);
   backdrop.appendChild(card);
   document.body.appendChild(backdrop);
 
@@ -7038,8 +8396,10 @@ categoryOrder.forEach(category => {
   summaryBtn.className = "category-action-btn summary";
   summaryBtn.textContent = "🧾 Resumé";
   summaryBtn.title = "Voir un resumé complet des thèmes + lancer un quiz de 50 questions";
+  summaryBtn.dataset.category = category;
   summaryBtn.addEventListener('click', () => showCategorySummary(category));
   catActions.appendChild(summaryBtn);
+  updateCategorySummaryButtonVisual(category);
   catActions.appendChild(statBtn);
   catActions.appendChild(exportBtn);
 
@@ -7256,9 +8616,885 @@ const searchResultsDiv = document.getElementById('searchResults');
 const searchResultsContent = document.getElementById('searchResultsContent');
 searchBar.addEventListener('input', filterThemes);
 
+const glossaryBtn = document.getElementById('glossaryBtn');
+if (glossaryBtn) glossaryBtn.addEventListener('click', () => openGlossaryModal());
+
+function escapeRegExp(s) {
+  return String(s || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function highlightText(text, searchTerm) {
-  const regex = new RegExp(`(${searchTerm})`, 'gi');
+  const safe = escapeRegExp(searchTerm);
+  if (!safe) return text;
+  const regex = new RegExp(`(${safe})`, 'gi');
   return text.replace(regex, '<mark style="background: #ffd700; color: #000; padding: 0 3px; border-radius: 2px; font-weight: bold;">$1</mark>');
+}
+
+function toShortClearDefinition(defText, maxLen = 180) {
+  let t = stripSummaryMarkup(defText);
+  t = t.replace(/^\s*(?:\-\s*)?/, '').trim();
+  if (!t) return '';
+
+  // Garder 1 phrase/clause max pour un rendu “court et clair”
+  const cut = t.split(/(?<=[\.!?])\s+|\s*;\s*|\s+—\s+|\s+–\s+|\s+\|\s+|\s+\u2022\s+/).filter(Boolean);
+  if (cut.length) t = cut[0].trim();
+
+  if (t.length > maxLen) {
+    t = t.slice(0, maxLen);
+    t = t.replace(/\s+\S*$/, '').trim();
+    t += '…';
+  }
+  return t;
+}
+
+// ===================== GLOSSAIRE PERSONNALISÉ (localStorage) =====================
+const CUSTOM_GLOSSARY_STORAGE_KEY = 'customGlossaryEntries.v1';
+
+function loadCustomGlossaryEntries() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_GLOSSARY_STORAGE_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map(e => {
+        const term = String(e && e.term || '').trim();
+        const def = String(e && e.def || '').trim();
+        const keys = Array.isArray(e && e.keys) ? e.keys.map(k => normalizeGlossaryKey(k)).filter(Boolean) : [];
+        if (!term || !def) return null;
+        const key = normalizeGlossaryKey(term);
+        if (!key) return null;
+        const allKeys = Array.from(new Set([key, ...keys])).filter(Boolean);
+        return { term, def, key, keys: allKeys };
+      })
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function saveCustomGlossaryEntries(entries) {
+  try {
+    const clean = (entries || [])
+      .map(e => ({
+        term: String(e && e.term || '').trim(),
+        def: String(e && e.def || '').trim(),
+        keys: Array.isArray(e && e.keys) ? e.keys.map(k => String(k)).filter(Boolean) : []
+      }))
+      .filter(e => e.term && e.def);
+    localStorage.setItem(CUSTOM_GLOSSARY_STORAGE_KEY, JSON.stringify(clean));
+  } catch {}
+}
+
+function upsertCustomGlossaryEntry({ term, def, keys }) {
+  const t = String(term || '').trim();
+  const d = String(def || '').trim();
+  if (!t || !d) return { ok: false, reason: 'Termes ou définition manquants.' };
+  const key = normalizeGlossaryKey(t);
+  if (!key) return { ok: false, reason: 'Terme invalide.' };
+
+  const extraKeys = Array.isArray(keys) ? keys.map(k => normalizeGlossaryKey(k)).filter(Boolean) : [];
+  const allKeys = Array.from(new Set([key, ...extraKeys])).filter(Boolean);
+
+  const current = loadCustomGlossaryEntries();
+  const map = new Map(current.map(e => [e.key, e]));
+  map.set(key, { term: t, def: d, key, keys: allKeys });
+  saveCustomGlossaryEntries(Array.from(map.values()));
+  return { ok: true, key };
+}
+
+function removeCustomGlossaryEntryByKey(key) {
+  const k = normalizeGlossaryKey(key);
+  if (!k) return false;
+  const current = loadCustomGlossaryEntries();
+  const next = current.filter(e => e.key !== k);
+  saveCustomGlossaryEntries(next);
+  return next.length !== current.length;
+}
+
+function getGlossaryKeySet(indexEntries) {
+  const set = new Set();
+  (indexEntries || []).forEach(e => {
+    if (!e) return;
+    const k = normalizeGlossaryKey(e.key || e.term);
+    if (k) set.add(k);
+    const keys = Array.isArray(e.keys) ? e.keys : [];
+    keys.forEach(x => {
+      const nk = normalizeGlossaryKey(x);
+      if (nk) set.add(nk);
+    });
+  });
+  return set;
+}
+
+function detectMissingGlossaryTermsFromThemes(themes, glossaryKeySet, options = {}) {
+  const maxItems = options.maxItems ?? 120;
+  const minCount = options.minCount ?? 2;
+  const aggressive = options.aggressive ?? false;
+
+  const stop = new Set([
+    'le','la','les','un','une','des','du','de','d','au','aux','en','dans','sur','sous','avec','sans','pour','par','vers','chez',
+    'et','ou','mais','donc','or','ni','car','que','qui','quoi','dont','où','si','alors','ainsi',
+    'est','sont','été','etre','être','fait','faire','doit','peut','peuvent','permet','permettent','donne','donner',
+    'plus','moins','très','tres','souvent','parfois','toujours','jamais','afin','comme','ex','exemple','exemples',
+    'attention','vigilance','risque','important','critique','conséquence','consequences','impact','méthode','process','procédure','procedure',
+    'calcul','formule','résumé','resume','objectif','principe','note','remarque','valeur','valeurs'
+  ]);
+
+  const isStop = (s) => stop.has(normalizeGlossaryKey(s));
+  const cleanToken = (s) => String(s || '').replace(/^[^A-Za-zÀ-ÿ0-9]+|[^A-Za-zÀ-ÿ0-9]+$/g, '').trim();
+
+  const looksTechnical = (tok) => {
+    const t = String(tok || '');
+    if (!t) return false;
+    if (/^[0-9]+$/.test(t)) return false;
+    if (t.length < 3) return false;
+    if (isStop(t)) return false;
+    if (/^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ]{2,8}$/.test(t)) return true; // acronymes
+    if (/[0-9]/.test(t)) return true;
+    if (/[\/:]/.test(t)) return true;
+    if (/-/.test(t)) return true;
+    if (/[°%₂²³]/.test(t)) return true;
+    // plus agressif: capter des termes métier courts (ex: gushing, trub, whirlpool, CIP déjà capté)
+    if (t.length >= (aggressive ? 6 : 8)) return true;
+    // suffixes “scientifiques/métier” (aide à repérer des mots sans symboles)
+    if (aggressive && /(tion|age|ment|ique|isme|logie|phage|ase|ose|one|ol|ite|ate|ide)$/i.test(t)) return true;
+    return false;
+  };
+
+  const add = (map, rawTerm, rawText) => {
+    const term = cleanToken(rawTerm);
+    if (!term) return;
+    const key = normalizeGlossaryKey(term);
+    if (!key || key.length < 3) return;
+    if (glossaryKeySet && glossaryKeySet.has(key)) return;
+    if (isStop(term)) return;
+
+    // filtrage minimal: on garde surtout ce qui “sonne technique”
+    if (!looksTechnical(term)) return;
+
+    const prev = map.get(key);
+    if (!prev) {
+      map.set(key, {
+        key,
+        term,
+        count: 1,
+        snippet: String(rawText || '').slice(0, 220).trim()
+      });
+    } else {
+      prev.count += 1;
+    }
+  };
+
+  const tokenRegex = /[A-Za-zÀ-ÿ0-9][A-Za-zÀ-ÿ0-9'’\-\/:%°₂²³]{2,}/g;
+
+  const map = new Map();
+
+  for (const theme of (themes || [])) {
+    const items = collectThemeFicheItems(theme);
+    for (const it of (items || [])) {
+      const raw = stripSummaryMarkup(it && it.item);
+      if (!raw) continue;
+      const tokens = raw.match(tokenRegex) || [];
+      tokens.forEach(tok => add(map, tok, raw));
+
+      // bigrams simples (dry hop, hop creep, acides alpha, etc.)
+      for (let i = 0; i < tokens.length - 1; i++) {
+        const a = cleanToken(tokens[i]);
+        const b = cleanToken(tokens[i + 1]);
+        if (!a || !b) continue;
+        if (isStop(a) || isStop(b)) continue;
+        const phrase = `${a} ${b}`;
+        const phraseKey = normalizeGlossaryKey(phrase);
+        if (!phraseKey || phraseKey.length < 5) continue;
+        if (glossaryKeySet && glossaryKeySet.has(phraseKey)) continue;
+        if (looksTechnical(a) || looksTechnical(b) || (a.length >= 5 && b.length >= 5)) {
+          add(map, phrase, raw);
+        }
+      }
+    }
+
+    // explications des questions
+    if (theme && theme.questions) {
+      for (const q of theme.questions) {
+        const raw = stripSummaryMarkup(q && q.explanation);
+        if (!raw) continue;
+        const tokens = raw.match(tokenRegex) || [];
+        tokens.forEach(tok => add(map, tok, raw));
+      }
+    }
+  }
+
+  const out = Array.from(map.values())
+    .filter(e => (e.count || 0) >= minCount)
+    .map(e => {
+      let score = (e.count || 0);
+      if (/^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ]{2,8}$/.test(e.term)) score += 8;
+      if (/[0-9°%₂²³]/.test(e.term)) score += 5;
+      if (/[\/:\-]/.test(e.term)) score += 3;
+      if (e.term.length >= 10) score += 2;
+      return { ...e, score };
+    })
+    .sort((a, b) => (b.score - a.score) || (b.count - a.count) || String(a.term).localeCompare(String(b.term), 'fr'))
+    .slice(0, maxItems);
+
+  return out;
+}
+
+// Index “termes techniques potentiels” (mode agressif toujours activé)
+var GLOBAL_TECH_TERMS_INDEX = [];
+function buildGlobalTechTermsIndex() {
+  const keySet = getGlossaryKeySet(GLOBAL_GLOSSARY_INDEX);
+  return detectMissingGlossaryTermsFromThemes((THEMES_VIEW || []).slice(), keySet, {
+    aggressive: true,
+    minCount: 1,
+    maxItems: 800
+  });
+}
+
+function buildGlobalGlossaryIndex() {
+  const map = new Map();
+
+  const isShortAcronym = (term) => /^[A-ZÉÈÀÙÂÊÎÔÛÄËÏÖÜÇ0-9]{2,8}$/.test(String(term || '').trim());
+  const scoreCandidate = (term, def) => {
+    const d = String(def || '');
+    const len = d.length;
+    let score = 0;
+    if (isShortAcronym(term)) score += 3;
+    if (len >= 20 && len <= 220) score += 3;
+    if (len >= 10 && len < 20) score += 1;
+    if (/[\(\)]/.test(d)) score += 1;
+    if (/(\bibu\b|\bebc\b|\bsrm\b|mg\/l|g\/l|ppm|°c|°p|\bplato\b|\bco2\b)/i.test(d)) score += 1;
+    if (/(désigne|correspond à|se définit|signifie|c['’]est|on appelle|mesure)/i.test(d)) score += 1;
+    if (len > 420) score -= 2;
+    if (len < 10) score -= 2;
+    return score;
+  };
+
+  // 0) Seed (glossaire brassicole) : garantit une définition courte même si le cours ne la formule pas explicitement
+  for (const s of getBrewGlossarySeedIndex()) {
+    const key = s.key;
+    if (!key) continue;
+    const shortDef = toShortClearDefinition(s.def, 180);
+    if (!shortDef) continue;
+    map.set(key, {
+      key,
+      term: s.term,
+      shortDef,
+      defFull: s.def,
+      score: 99,
+      keys: (s.keys && s.keys.length) ? s.keys : [key],
+      themeTitle: `(Glossaire)` ,
+      themeId: null,
+      category: 'GLOSSAIRE'
+    });
+  }
+
+  // 0bis) Glossaire personnalisé (localStorage) : prioritaire sur le seed
+  for (const c of loadCustomGlossaryEntries()) {
+    const key = c.key;
+    if (!key) continue;
+    const shortDef = toShortClearDefinition(c.def, 220);
+    if (!shortDef) continue;
+    map.set(key, {
+      key,
+      term: c.term,
+      shortDef,
+      defFull: c.def,
+      score: 120,
+      keys: (c.keys && c.keys.length) ? c.keys : [key],
+      themeTitle: `(Perso)`,
+      themeId: null,
+      category: 'GLOSSAIRE'
+    });
+  }
+
+  for (const theme of (THEMES_VIEW || [])) {
+    const items = collectThemeFicheItems(theme);
+    const consumed = new Set();
+
+    for (let i = 0; i < items.length; i++) {
+      if (consumed.has(i)) continue;
+      const entry = items[i];
+      const plain = stripSummaryMarkup(entry.item);
+      if (!plain) continue;
+
+      let pair = extractGlossaryPairFromPlainText(plain);
+
+      // terme sur une ligne + explication sur la suivante
+      if (!pair && isLikelyStandaloneGlossaryTermLine(plain)) {
+        const next = items[i + 1];
+        if (next && String(next.sectionTitle || '') === String(entry.sectionTitle || '')) {
+          const nextPlain = stripSummaryMarkup(next.item);
+          if (nextPlain && isLikelyDefinitionLine(nextPlain)) {
+            pair = extractGlossaryPairFromPlainText(`${plain} : ${nextPlain}`);
+            if (pair) consumed.add(i + 1);
+          }
+        }
+      }
+
+      if (!pair || !pair.term || !pair.def) continue;
+
+      const term = String(pair.term).trim();
+      const def = String(pair.def).trim();
+      if (!term || !def) continue;
+
+      const key = normalizeGlossaryKey(term);
+      if (!key) continue;
+
+      const score = scoreCandidate(term, def);
+      const shortDef = toShortClearDefinition(def, 180);
+      if (!shortDef) continue;
+
+      const prev = map.get(key);
+      if (!prev || score > prev.score || (score === prev.score && shortDef.length < prev.shortDef.length)) {
+        map.set(key, {
+          key,
+          term,
+          shortDef,
+          defFull: def,
+          score,
+          keys: [key],
+          themeTitle: theme.title,
+          themeId: theme.id,
+          category: theme.category
+        });
+      }
+    }
+
+    // Extraire aussi depuis les explications de questions (souvent là que se trouve la définition courte)
+    if (theme.questions) {
+      for (const q of theme.questions) {
+        const expl = stripSummaryMarkup(q && q.explanation);
+        if (!expl) continue;
+        const candidate = extractGlossaryPairFromPlainText(expl);
+        if (!candidate || !candidate.term || !candidate.def) continue;
+
+        const term = String(candidate.term).trim();
+        const def = String(candidate.def).trim();
+        const key = normalizeGlossaryKey(term);
+        if (!key) continue;
+        const shortDef = toShortClearDefinition(def, 180);
+        if (!shortDef) continue;
+        const score = 30; // en dessous du seed mais suffisamment haut
+        const prev = map.get(key);
+        if (!prev) {
+          map.set(key, {
+            key,
+            term,
+            shortDef,
+            defFull: def,
+            score,
+            keys: [key],
+            themeTitle: theme.title,
+            themeId: theme.id,
+            category: theme.category
+          });
+        }
+      }
+    }
+  }
+
+  return Array.from(map.values());
+}
+
+var GLOBAL_GLOSSARY_INDEX = [];
+try {
+  GLOBAL_GLOSSARY_INDEX = buildGlobalGlossaryIndex();
+} catch (e) {
+  console.warn('Glossaire: index non construit', e);
+  GLOBAL_GLOSSARY_INDEX = [];
+}
+
+try {
+  GLOBAL_TECH_TERMS_INDEX = buildGlobalTechTermsIndex();
+} catch (e) {
+  console.warn('Glossaire: index termes techniques non construit', e);
+  GLOBAL_TECH_TERMS_INDEX = [];
+}
+
+let GLOBAL_SUMMARY_INDEX = [];
+function buildGlobalSummaryIndex() {
+  const idx = [];
+  const categories = Array.from(new Set((THEMES_VIEW || []).map(t => t.category))).filter(Boolean);
+  const addEntry = (scope, meta, bucketTitle, htmlItem) => {
+    const text = stripSummaryMarkup(htmlItem);
+    const norm = normalizeGlossaryKey(text);
+    if (!text || !norm) return;
+    idx.push({ scope, ...meta, bucketTitle, html: htmlItem, text, norm });
+  };
+
+  // Catégories
+  categories.forEach(cat => {
+    const themes = getThemesByCategory(cat);
+    const buckets = buildStructuredBucketsFromThemes(themes, { limitPerBucket: 30, includeSourceTags: true });
+    Object.keys(buckets || {}).forEach(bucketTitle => {
+      (buckets[bucketTitle] || []).forEach(html => addEntry('category', { category: cat }, bucketTitle, html));
+    });
+  });
+
+  // Thèmes
+  (THEMES_VIEW || []).forEach(theme => {
+    const buckets = buildStructuredBucketsFromThemes([theme], { limitPerBucket: 20, includeSourceTags: false });
+    Object.keys(buckets || {}).forEach(bucketTitle => {
+      (buckets[bucketTitle] || []).forEach(html => addEntry('theme', { category: theme.category, themeId: theme.id, themeTitle: theme.title }, bucketTitle, html));
+    });
+  });
+
+  return idx;
+}
+
+try {
+  GLOBAL_SUMMARY_INDEX = buildGlobalSummaryIndex();
+} catch (e) {
+  console.warn('Résumé: index non construit', e);
+  GLOBAL_SUMMARY_INDEX = [];
+}
+
+function openGlossaryModal(initialQuery, opts = {}) {
+  const existing = document.querySelector('.glossary-backdrop');
+  if (existing) existing.remove();
+
+  // S'assurer que l'index est prêt
+  if ((!GLOBAL_GLOSSARY_INDEX || GLOBAL_GLOSSARY_INDEX.length === 0) && typeof buildGlobalGlossaryIndex === 'function') {
+    try { GLOBAL_GLOSSARY_INDEX = buildGlobalGlossaryIndex(); } catch {}
+  }
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'glossary-backdrop';
+
+  const card = document.createElement('div');
+  card.className = 'glossary-card';
+
+  const header = document.createElement('div');
+  header.className = 'glossary-header';
+
+  const title = document.createElement('div');
+  title.className = 'glossary-title';
+  title.textContent = '📚 Glossaire (définitions)';
+
+  const actions = document.createElement('div');
+  actions.className = 'glossary-actions';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'glossary-close';
+  closeBtn.textContent = '✖ Fermer';
+  closeBtn.addEventListener('click', () => backdrop.remove());
+
+  actions.appendChild(closeBtn);
+  header.appendChild(title);
+  header.appendChild(actions);
+
+  const body = document.createElement('div');
+  body.className = 'glossary-body';
+
+  const searchRow = document.createElement('div');
+  searchRow.className = 'glossary-search';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Rechercher une définition (ex: diacétyle, CIP, IBU…)';
+  input.value = initialQuery ? String(initialQuery) : '';
+  searchRow.appendChild(input);
+
+  // Outils: ajouter une définition + détecter termes manquants
+  const tools = document.createElement('div');
+  tools.className = 'glossary-tools';
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'secondary';
+  addBtn.textContent = '➕ Ajouter une définition';
+
+  const missingBtn = document.createElement('button');
+  missingBtn.textContent = '🕵️ Termes à définir';
+
+  const rebuildBtn = document.createElement('button');
+  rebuildBtn.className = 'secondary';
+  rebuildBtn.textContent = '↻ Reconstruire index';
+
+  // Mode agressif (visible en permanence)
+  const aggressiveWrap = document.createElement('div');
+  aggressiveWrap.style.display = 'flex';
+  aggressiveWrap.style.gap = '0.45rem';
+  aggressiveWrap.style.alignItems = 'center';
+  aggressiveWrap.style.padding = '0.25rem 0.5rem';
+  aggressiveWrap.style.borderRadius = '10px';
+  aggressiveWrap.style.border = '1px solid rgba(88, 166, 255, 0.22)';
+  aggressiveWrap.style.background = 'rgba(88, 166, 255, 0.08)';
+
+  const aggressiveToggle = document.createElement('input');
+  aggressiveToggle.type = 'checkbox';
+  aggressiveToggle.checked = true;
+  aggressiveToggle.id = 'glossaryAggressiveToggle';
+
+  const aggressiveLabel = document.createElement('label');
+  aggressiveLabel.setAttribute('for', 'glossaryAggressiveToggle');
+  aggressiveLabel.style.cursor = 'pointer';
+  aggressiveLabel.style.fontWeight = '900';
+  aggressiveLabel.style.color = 'var(--text)';
+  aggressiveLabel.textContent = 'Agressif';
+
+  aggressiveWrap.title = 'Mode agressif: détecte plus de termes (mais peut ajouter du bruit).';
+  aggressiveWrap.appendChild(aggressiveToggle);
+  aggressiveWrap.appendChild(aggressiveLabel);
+
+  const status = document.createElement('div');
+  status.className = 'glossary-mini';
+  status.textContent = '';
+
+  tools.appendChild(addBtn);
+  tools.appendChild(missingBtn);
+  tools.appendChild(rebuildBtn);
+  tools.appendChild(aggressiveWrap);
+  tools.appendChild(status);
+
+  const list = document.createElement('div');
+  list.className = 'glossary-list';
+
+  const panel = document.createElement('div');
+  panel.className = 'glossary-panel';
+  panel.style.display = 'none';
+
+  const panelTitle = document.createElement('div');
+  panelTitle.style.fontWeight = '950';
+  panelTitle.textContent = '';
+  panel.appendChild(panelTitle);
+
+  const form = document.createElement('div');
+  form.style.display = 'none';
+  form.style.display = 'grid';
+  form.style.gap = '0.6rem';
+
+  const termRow = document.createElement('div');
+  termRow.className = 'row';
+  const termLabel = document.createElement('label');
+  termLabel.textContent = 'Terme';
+  const termInput = document.createElement('input');
+  termInput.placeholder = 'Ex: Gushing, IBU, BU:GU, Hop creep…';
+  termRow.appendChild(termLabel);
+  termRow.appendChild(termInput);
+
+  const keysRow = document.createElement('div');
+  keysRow.className = 'row';
+  const keysLabel = document.createElement('label');
+  keysLabel.textContent = 'Synonymes / variantes (optionnel)';
+  const keysInput = document.createElement('input');
+  keysInput.placeholder = 'Ex: sur-moussage, jaillissement (séparés par des virgules)';
+  keysRow.appendChild(keysLabel);
+  keysRow.appendChild(keysInput);
+
+  const defRow = document.createElement('div');
+  defRow.className = 'row';
+  const defLabel = document.createElement('label');
+  defLabel.textContent = 'Définition (courte et claire)';
+  const defInput = document.createElement('textarea');
+  defInput.placeholder = 'Écris une définition simple, 1–2 phrases max.';
+  defRow.appendChild(defLabel);
+  defRow.appendChild(defInput);
+
+  const formActions = document.createElement('div');
+  formActions.className = 'glossary-tools';
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'secondary';
+  saveBtn.textContent = '💾 Enregistrer';
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'danger';
+  deleteBtn.textContent = '🗑 Supprimer (perso)';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = '✖ Fermer';
+
+  formActions.appendChild(saveBtn);
+  formActions.appendChild(deleteBtn);
+  formActions.appendChild(cancelBtn);
+
+  const formHint = document.createElement('div');
+  formHint.className = 'glossary-mini';
+  formHint.textContent = 'Les définitions “perso” sont stockées sur ton navigateur (localStorage) et deviennent prioritaires.';
+
+  form.appendChild(termRow);
+  form.appendChild(keysRow);
+  form.appendChild(defRow);
+  form.appendChild(formActions);
+  form.appendChild(formHint);
+
+  panel.appendChild(form);
+
+  const missingPanel = document.createElement('div');
+  missingPanel.style.display = 'none';
+  missingPanel.style.display = 'grid';
+  missingPanel.style.gap = '0.6rem';
+
+  const missingTools = document.createElement('div');
+  missingTools.className = 'glossary-tools';
+
+  const scanAllBtn = document.createElement('button');
+  scanAllBtn.textContent = 'Scanner tout';
+  const scanCatBtn = document.createElement('button');
+  scanCatBtn.className = 'secondary';
+  scanCatBtn.textContent = 'Scanner catégorie actuelle';
+  const scanThemeBtn = document.createElement('button');
+  scanThemeBtn.className = 'secondary';
+  scanThemeBtn.textContent = 'Scanner thème actuel';
+
+  missingTools.appendChild(scanAllBtn);
+  missingTools.appendChild(scanCatBtn);
+  missingTools.appendChild(scanThemeBtn);
+
+  const missingInfo = document.createElement('div');
+  missingInfo.className = 'glossary-mini';
+  missingInfo.textContent = 'But: trouver les termes techniques présents dans tes cours mais absents du glossaire, puis les ajouter en 2 clics.';
+
+
+  const missingList = document.createElement('div');
+  missingList.className = 'glossary-list';
+
+  missingPanel.appendChild(missingTools);
+  missingPanel.appendChild(missingInfo);
+  missingPanel.appendChild(missingList);
+
+  panel.appendChild(missingPanel);
+
+  let mode = 'browse'; // browse | add | missing
+
+  const setMode = (m) => {
+    mode = m;
+    panel.style.display = (mode === 'browse') ? 'none' : 'grid';
+    form.style.display = (mode === 'add') ? 'grid' : 'none';
+    missingPanel.style.display = (mode === 'missing') ? 'grid' : 'none';
+    list.style.display = (mode === 'browse') ? 'grid' : 'none';
+    status.textContent = '';
+    if (mode === 'add') {
+      panelTitle.textContent = 'Ajouter / modifier une définition (perso)';
+      setTimeout(() => { try { termInput.focus(); } catch {} }, 0);
+    }
+    if (mode === 'missing') {
+      panelTitle.textContent = 'Termes détectés sans définition';
+    }
+  };
+
+  const rebuildIndexes = () => {
+    try { GLOBAL_GLOSSARY_INDEX = buildGlobalGlossaryIndex(); } catch {}
+    try { GLOBAL_SUMMARY_INDEX = buildGlobalSummaryIndex(); } catch {}
+    try { GLOBAL_TECH_TERMS_INDEX = buildGlobalTechTermsIndex(); } catch {}
+  };
+
+  const render = () => {
+    const q = normalizeGlossaryKey(input.value);
+    let entries = (GLOBAL_GLOSSARY_INDEX || []).slice();
+
+    // On garde en haut les meilleures correspondances
+    if (q) {
+      entries = entries
+        .map(e => {
+          const keys = Array.isArray(e.keys) && e.keys.length ? e.keys : [e.key];
+          const hit = keys.some(k => k === q || k.startsWith(q) || k.includes(q) || q.includes(k) || (q.length >= 4 && k.split(' ').some(tok => tok === q || tok.startsWith(q))));
+          if (!hit) return null;
+          let rank = 9;
+          if (keys.some(k => k === q)) rank = 0;
+          else if (keys.some(k => k.startsWith(q))) rank = 1;
+          else if (keys.some(k => k.includes(q))) rank = 2;
+          else if (keys.some(k => q.includes(k))) rank = 3;
+          return { ...e, _rank: rank };
+        })
+        .filter(Boolean)
+        .sort((a, b) => (a._rank - b._rank) || ((b.score || 0) - (a.score || 0)) || (String(a.term).localeCompare(String(b.term), 'fr')));
+    } else {
+      entries = entries.sort((a, b) => String(a.term).localeCompare(String(b.term), 'fr'));
+    }
+
+    const show = entries.slice(0, 200);
+    list.innerHTML = '';
+    if (show.length === 0) {
+      const empty = document.createElement('div');
+      empty.style.color = 'var(--muted)';
+      empty.style.fontStyle = 'italic';
+      empty.textContent = 'Aucune définition trouvée.';
+      list.appendChild(empty);
+      return;
+    }
+
+    show.forEach(e => {
+      const it = document.createElement('div');
+      it.className = 'glossary-item';
+      it.innerHTML = `
+        <div class="term">${escapeHtml(e.term || '')}</div>
+        <div class="def">${highlightText(escapeHtml(e.shortDef || e.defFull || ''), input.value.trim())}</div>
+        <div class="meta">${escapeHtml(e.category || '')}${e.themeTitle ? ` • ${escapeHtml(e.themeTitle)}` : ''}</div>
+      `;
+
+      it.addEventListener('click', () => {
+        if (e.themeId) {
+          const btn = document.querySelector(`.theme-btn[data-theme-id="${CSS.escape(e.themeId)}"]`);
+          if (btn) {
+            btn.click();
+            backdrop.remove();
+            try { btn.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
+          }
+        }
+      });
+
+      list.appendChild(it);
+    });
+  };
+
+  input.addEventListener('input', render);
+  render();
+
+  const openAddForm = (prefillTerm) => {
+    rebuildIndexes();
+    const term = String(prefillTerm || '').trim();
+    termInput.value = term;
+    keysInput.value = '';
+    defInput.value = '';
+
+    // Si déjà défini en perso, pré-remplir
+    const custom = loadCustomGlossaryEntries();
+    const k = normalizeGlossaryKey(term);
+    const found = custom.find(e => e.key === k);
+    if (found) {
+      keysInput.value = (found.keys || []).filter(x => x !== found.key).join(', ');
+      defInput.value = found.def || '';
+      status.textContent = 'Terme déjà présent en “perso”: modification possible.';
+    } else if (term) {
+      status.textContent = 'Ajoute une définition courte et claire.';
+    }
+    setMode('add');
+  };
+
+  addBtn.addEventListener('click', () => openAddForm(input.value.trim()));
+  cancelBtn.addEventListener('click', () => setMode('browse'));
+
+  rebuildBtn.addEventListener('click', () => {
+    rebuildIndexes();
+    status.textContent = 'Index reconstruit.';
+    if (mode === 'browse') render();
+  });
+
+  saveBtn.addEventListener('click', () => {
+    const term = termInput.value.trim();
+    const def = defInput.value.trim();
+    const keys = keysInput.value.split(',').map(s => s.trim()).filter(Boolean);
+    const res = upsertCustomGlossaryEntry({ term, def, keys });
+    if (!res.ok) {
+      status.textContent = res.reason || 'Impossible d’enregistrer.';
+      return;
+    }
+    rebuildIndexes();
+    status.textContent = 'Définition enregistrée. Elle est maintenant intégrée au glossaire et aux résumés.';
+    setMode('browse');
+    render();
+  });
+
+  deleteBtn.addEventListener('click', () => {
+    const term = termInput.value.trim();
+    if (!term) {
+      status.textContent = 'Aucun terme à supprimer.';
+      return;
+    }
+    const ok = removeCustomGlossaryEntryByKey(term);
+    rebuildIndexes();
+    status.textContent = ok ? 'Définition perso supprimée.' : 'Aucune définition perso trouvée pour ce terme.';
+    setMode('browse');
+    render();
+  });
+
+  const renderMissingList = (missing) => {
+    missingList.innerHTML = '';
+    if (!missing || missing.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'glossary-mini';
+      empty.style.fontStyle = 'italic';
+      empty.textContent = 'Aucun terme manquant détecté (avec les réglages actuels).';
+      missingList.appendChild(empty);
+      return;
+    }
+
+    missing.forEach(e => {
+      const it = document.createElement('div');
+      it.className = 'glossary-missing-item';
+      it.innerHTML = `
+        <div class="top">
+          <div class="term">${escapeHtml(e.term || '')}</div>
+          <div class="count">${Number(e.count || 0)} occurrence(s)</div>
+        </div>
+        <div class="snippet">${escapeHtml(e.snippet || '')}</div>
+      `;
+
+      const define = document.createElement('button');
+      define.className = 'secondary';
+      define.style.marginTop = '0.6rem';
+      define.textContent = '➕ Définir ce terme';
+      define.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        openAddForm(e.term);
+      });
+      it.appendChild(define);
+      missingList.appendChild(it);
+    });
+  };
+
+  const scan = (scope) => {
+    rebuildIndexes();
+    const keySet = getGlossaryKeySet(GLOBAL_GLOSSARY_INDEX);
+    let themes = (THEMES_VIEW || []).slice();
+
+    if (scope === 'category') {
+      const cat = currentTheme && currentTheme.category;
+      if (cat && cat !== 'GLOBAL') themes = getThemesByCategory(cat);
+      else themes = (THEMES_VIEW || []).slice();
+    }
+    if (scope === 'theme') {
+      const t = currentTheme && THEMES_VIEW && THEMES_VIEW.find(x => x.id === currentTheme.id);
+      themes = t ? [t] : [];
+    }
+
+    const aggressive = !!(aggressiveToggle && aggressiveToggle.checked);
+    const missing = detectMissingGlossaryTermsFromThemes(themes, keySet, {
+      maxItems: aggressive ? 260 : 160,
+      minCount: aggressive ? 1 : 2,
+      aggressive
+    });
+    renderMissingList(missing);
+    status.textContent = `Trouvé ${missing.length} terme(s) potentiels à définir.`;
+  };
+
+  missingBtn.addEventListener('click', () => {
+    setMode('missing');
+    scan('category');
+  });
+
+  scanAllBtn.addEventListener('click', () => scan('all'));
+  scanCatBtn.addEventListener('click', () => scan('category'));
+  scanThemeBtn.addEventListener('click', () => scan('theme'));
+
+  body.appendChild(searchRow);
+  body.appendChild(tools);
+  body.appendChild(panel);
+  body.appendChild(list);
+
+  card.appendChild(header);
+  card.appendChild(body);
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  setTimeout(() => {
+    try { input.focus(); input.select(); } catch {}
+  }, 0);
+
+  // Ouverture directe en mode demandé
+  if (opts && opts.mode === 'add') {
+    openAddForm(opts.term || initialQuery || '');
+  } else if (opts && opts.mode === 'missing') {
+    setMode('missing');
+    scan(opts.scope || 'category');
+  }
 }
 
 function filterThemes() {
@@ -7279,6 +9515,105 @@ function filterThemes() {
   }
   
   const results = [];
+
+  // (Re)construire l'index si nécessaire (ex: ordre de chargement / modifications)
+  if ((!GLOBAL_GLOSSARY_INDEX || GLOBAL_GLOSSARY_INDEX.length === 0) && typeof buildGlobalGlossaryIndex === 'function') {
+    try { GLOBAL_GLOSSARY_INDEX = buildGlobalGlossaryIndex(); } catch {}
+  }
+  if ((!GLOBAL_SUMMARY_INDEX || GLOBAL_SUMMARY_INDEX.length === 0) && typeof buildGlobalSummaryIndex === 'function') {
+    try { GLOBAL_SUMMARY_INDEX = buildGlobalSummaryIndex(); } catch {}
+  }
+  if ((!GLOBAL_TECH_TERMS_INDEX || GLOBAL_TECH_TERMS_INDEX.length === 0) && typeof buildGlobalTechTermsIndex === 'function') {
+    try { GLOBAL_TECH_TERMS_INDEX = buildGlobalTechTermsIndex(); } catch {}
+  }
+
+  // 1) Glossaire (résumés/définitions) : afficher en premier
+  const queryKey = normalizeGlossaryKey(searchTerm);
+  const defMatches = [];
+  if (queryKey && GLOBAL_GLOSSARY_INDEX && GLOBAL_GLOSSARY_INDEX.length) {
+    for (const g of GLOBAL_GLOSSARY_INDEX) {
+      if (!g || !g.key) continue;
+      const keys = Array.isArray(g.keys) && g.keys.length ? g.keys : [g.key];
+      // Match exact + partiel + mot contenu (utile pour "diastasique" -> "pouvoir diastasique")
+      const hit = keys.some(k => (k === queryKey)
+        || k.startsWith(queryKey)
+        || k.includes(queryKey)
+        || queryKey.includes(k)
+        || (queryKey.length >= 4 && k.split(' ').some(tok => tok === queryKey || tok.startsWith(queryKey))));
+      if (hit) {
+        let rank = 9;
+        if (keys.some(k => k === queryKey)) rank = 0;
+        else if (keys.some(k => k.startsWith(queryKey))) rank = 1;
+        else if (keys.some(k => k.includes(queryKey))) rank = 2;
+        else if (keys.some(k => queryKey.includes(k))) rank = 3;
+        defMatches.push({ ...g, rank });
+      }
+    }
+  }
+
+  defMatches.sort((a, b) => (a.rank - b.rank) || ((b.score || 0) - (a.score || 0)) || (a.shortDef.length - b.shortDef.length));
+  const topDefs = defMatches.slice(0, 6);
+  const matchedThemeIdsByDef = new Set(topDefs.map(d => d.themeId).filter(Boolean));
+  topDefs.forEach(d => {
+    results.push({
+      theme: d.themeTitle || (d.category ? `(${d.category})` : '—'),
+      type: 'Définition (Glossaire)',
+      content: `${d.term} — ${d.shortDef}`,
+      priority: 0
+    });
+  });
+
+  // 1bis) Mode agressif en recherche globale : si pas de définition trouvée, proposer le terme technique à définir
+  // (Toujours activé ici, comme demandé.)
+  if (queryKey && queryKey.length >= 3 && topDefs.length === 0 && GLOBAL_TECH_TERMS_INDEX && GLOBAL_TECH_TERMS_INDEX.length) {
+    const matches = (GLOBAL_TECH_TERMS_INDEX || [])
+      .map(t => {
+        const k = normalizeGlossaryKey(t && (t.key || t.term));
+        if (!k) return null;
+        const hit = (k === queryKey) || k.startsWith(queryKey) || k.includes(queryKey) || queryKey.includes(k);
+        if (!hit) return null;
+        let rank = 9;
+        if (k === queryKey) rank = 0;
+        else if (k.startsWith(queryKey)) rank = 1;
+        else if (k.includes(queryKey)) rank = 2;
+        else if (queryKey.includes(k)) rank = 3;
+        return { ...t, _rank: rank };
+      })
+      .filter(Boolean)
+      .sort((a, b) => (a._rank - b._rank) || ((b.count || 0) - (a.count || 0)) || (String(a.term).localeCompare(String(b.term), 'fr')))
+      .slice(0, 2);
+
+    matches.forEach(m => {
+      results.push({
+        theme: 'Glossaire',
+        type: 'Terme technique (à définir)',
+        content: `${m.term} — ${m.snippet || ''}`,
+        priority: 0.5,
+        action: 'define',
+        actionTerm: m.term
+      });
+    });
+  }
+
+  // 2) Recherche dans les résumés (index)
+  if (queryKey && GLOBAL_SUMMARY_INDEX && GLOBAL_SUMMARY_INDEX.length) {
+    const maxSummaryHits = 18;
+    let count = 0;
+    for (const s of GLOBAL_SUMMARY_INDEX) {
+      if (count >= maxSummaryHits) break;
+      if (!s || !s.norm) continue;
+      if (s.norm.includes(queryKey)) {
+        count++;
+        const label = s.scope === 'category' ? `Catégorie ${s.category}` : (s.themeTitle || 'Thème');
+        results.push({
+          theme: label,
+          type: `Résumé - ${s.bucketTitle}`,
+          content: s.text,
+          priority: 1
+        });
+      }
+    }
+  }
   
   themeButtons.forEach(btn => {
     const themeId = btn.getAttribute('data-theme-id');
@@ -7339,6 +9674,11 @@ function filterThemes() {
         });
       });
     }
+
+    // Si une définition a matché ce thème, on le garde visible
+    if (matchedThemeIdsByDef.has(theme.id)) {
+      found = true;
+    }
     
     if (found) {
       btn.parentElement.style.display = '';
@@ -7350,7 +9690,11 @@ function filterThemes() {
   // Afficher les résultats
   if (results.length > 0) {
     searchResultsDiv.style.display = 'block';
-    searchResultsContent.innerHTML = results.map(r => `
+    const ordered = results
+      .map((r, idx) => ({ ...r, priority: (r.priority ?? 10), _idx: idx }))
+      .sort((a, b) => (a.priority - b.priority) || (a._idx - b._idx));
+
+    searchResultsContent.innerHTML = ordered.map(r => `
       <div style="background: rgba(88, 166, 255, 0.1); padding: 1rem; margin-bottom: 0.8rem; border-radius: 6px; border-left: 3px solid var(--accent);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
           <strong style="color: var(--accent);">${r.theme}</strong>
@@ -7445,11 +9789,24 @@ function filterCurrentTheme() {
       <div style="background: rgba(88, 166, 255, 0.1); padding: 1rem; margin-bottom: 0.8rem; border-radius: 6px; border-left: 3px solid var(--accent);">
         <div style="margin-bottom: 0.5rem;">
           <span style="background: rgba(167, 139, 250, 0.3); color: #a78bfa; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85em;">${r.type}</span>
-        </div>
+          <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap: wrap; justify-content:flex-end;">
+            <span style="background: rgba(167, 139, 250, 0.3); color: #a78bfa; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85em;">${r.type}</span>
+            ${r.action === 'define' && r.actionTerm ? `<button class="define-term-btn" data-term="${escapeHtml(String(r.actionTerm))}" style="padding:0.35rem 0.6rem; border-radius:8px; border:1px solid rgba(63,185,80,0.25); background: rgba(63,185,80,0.12); color: var(--text); font-weight: 900; cursor: pointer;">➕ Définir</button>` : ''}
+          </div>
         <div style="color: var(--text); line-height: 1.6;">${highlightText(r.content, searchTerm)}</div>
       </div>
     `).join('');
   } else {
+
+    // Bind actions (évite inline onclick)
+    searchResultsContent.querySelectorAll('.define-term-btn').forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const term = btn.getAttribute('data-term') || '';
+        if (term) openGlossaryModal(term, { mode: 'add', term });
+      });
+    });
     themeSearchResultsDiv.style.display = 'block';
     themeSearchResultsContent.innerHTML = '<p style="color: var(--muted); text-align: center; padding: 1rem;">Aucun résultat trouvé dans ce thème</p>';
   }
