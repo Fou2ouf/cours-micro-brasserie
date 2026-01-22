@@ -1646,6 +1646,115 @@
       .formula-grid, .formula-out { grid-template-columns: 1fr; }
     }
 
+    /* Croix pour effacer la recherche (globale + dans thème) */
+    .search-input-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .search-clear-btn.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .search-clear-btn:hover {
+      background: rgba(248, 81, 73, 0.18);
+      border-color: rgba(248, 81, 73, 0.35);
+      transform: translateY(-50%) scale(1.03);
+    }
+
+    .search-clear-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.22);
+      border-color: rgba(88, 166, 255, 0.45);
+    }
+
+    /* Barre de recherche compacte (bureau) */
+    #searchBarContainer {
+      padding: 0.95rem 1.1rem !important;
+      gap: 0.65rem !important;
+      flex-wrap: nowrap !important;
+    }
+
+    #searchBarContainer .search-input-wrap {
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+
+    #searchBarContainer input#searchBar {
+      min-width: 0 !important;
+      padding: 0.65rem 0.85rem !important;
+      padding-right: 2.6rem !important;
+      font-size: 0.95em !important;
+    }
+
+    #searchBarContainer button {
+      padding: 0.6rem 0.95rem !important;
+      font-size: 0.92em !important;
+      border-radius: 10px !important;
+    }
+
+    @media (max-width: 1050px) {
+      #searchBarContainer {
+        flex-wrap: wrap !important;
+      }
+      #searchBarContainer .search-input-wrap {
+        flex-basis: 100%;
+      }
+    }
+
+    /* Mode recherche: n'afficher que la barre + les résultats */
+    body.search-only-mode header,
+    body.search-only-mode #nav,
+    body.search-only-mode #controls,
+    body.search-only-mode #themeSearchContainer,
+    body.search-only-mode #fiche,
+    body.search-only-mode #quizContainer,
+    body.search-only-mode #scrollNav,
+    body.search-only-mode #statsPanel,
+    body.search-only-mode #statsChart {
+      display: none !important;
+    }
+
+    body.search-only-mode #searchBarContainer {
+      position: sticky;
+      top: 0;
+      z-index: 10001;
+      border-bottom: 1px solid var(--accent);
+    }
+
+    body.search-only-mode #searchBarContainer > button:not(#searchModeToggle) {
+      display: none !important;
+    }
+
+    body.search-only-mode #searchResults {
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
     /* Mode montre (Galaxy Watch / petits écrans quasi carrés)
        Objectif : lisible + cliquable sans changer téléphone/PC.
        Déclenchement : petite taille + aspect ratio ~ 1:1 (évite les téléphones).
@@ -1663,6 +1772,13 @@
         min-width: 0 !important;
         padding: 0.55rem 0.65rem !important;
         font-size: 0.9em !important;
+      }
+
+      .search-clear-btn {
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
       }
 
       #searchBarContainer button {
@@ -1972,7 +2088,11 @@
 
   <!-- Barre de recherche -->
   <div id="searchBarContainer" class="course-content" style="padding: 1.5rem; background: var(--card-bg); border-bottom: 1px solid var(--accent); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-    <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="flex: 1; min-width: 300px; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+    <div class="search-input-wrap" style="flex: 1; min-width: 200px;">
+      <input type="text" id="searchBar" placeholder="🔍 Rechercher un thème..." style="width: 100%; padding: 0.8rem; padding-right: 2.6rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+      <button type="button" id="clearSearchBar" class="search-clear-btn" aria-label="Effacer la recherche" title="Effacer">✕</button>
+    </div>
+    <button id="searchModeToggle" style="background: rgba(245, 158, 11, 0.15); color: #fff; border: 1px solid rgba(245, 158, 11, 0.35); padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 900; white-space: nowrap; font-size: 1em; transition: all 0.2s;">🔎 Mode recherche</button>
     <button id="glossaryBtn" style="background: rgba(88, 166, 255, 0.18); color: #fff; border: 1px solid rgba(88, 166, 255, 0.35); padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 800; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📚 Glossaire</button>
     <button id="statsBtn" style="background: #f59e0b; color: #000; border: none; padding: 0.8rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 700; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📊 Statistiques</button>
     <button id="exportAllThemes" style="background: #3fb950; color: #fff; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: 1em; transition: all 0.2s;">📦 Exporter tous</button>
@@ -2045,7 +2165,10 @@
 
   <!-- Barre de recherche dans le thème -->
   <div id="themeSearchContainer" class="course-content" style="padding: 1rem; background: var(--card-bg); border-bottom: 1px solid var(--border); margin-bottom: 0;">
-    <input type="text" id="themeSearchBar" placeholder="🔍 Rechercher dans ce thème..." style="width: 100%; padding: 0.8rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+    <div class="search-input-wrap" style="width: 100%;">
+      <input type="text" id="themeSearchBar" placeholder="🔍 Rechercher dans ce thème..." style="width: 100%; padding: 0.8rem; padding-right: 2.6rem; background: var(--bg); border: 2px solid var(--accent); color: var(--text); border-radius: 6px; font-size: 1em;">
+      <button type="button" id="clearThemeSearchBar" class="search-clear-btn" aria-label="Effacer la recherche dans ce thème" title="Effacer">✕</button>
+    </div>
     <div id="themeSearchResults" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: 6px; max-height: 300px; overflow-y: auto;">
       <div id="themeSearchResultsContent"></div>
     </div>
@@ -7617,16 +7740,43 @@ function showCategorySummary(category) {
   const modalSearchRow = document.createElement('div');
   modalSearchRow.style.display = 'none';
   modalSearchRow.style.marginTop = '0.6rem';
+  const modalSearchWrap = document.createElement('div');
+  modalSearchWrap.className = 'search-input-wrap';
+  modalSearchWrap.style.width = '100%';
   const modalSearch = document.createElement('input');
   modalSearch.type = 'text';
   modalSearch.placeholder = '🔍 Rechercher dans la fiche (résumé)…';
   modalSearch.style.width = '100%';
   modalSearch.style.padding = '0.8rem';
+  modalSearch.style.paddingRight = '2.6rem';
   modalSearch.style.background = 'var(--bg)';
   modalSearch.style.border = '2px solid rgba(88, 166, 255, 0.35)';
   modalSearch.style.color = 'var(--text)';
   modalSearch.style.borderRadius = '10px';
-  modalSearchRow.appendChild(modalSearch);
+
+  const modalClearBtn = document.createElement('button');
+  modalClearBtn.type = 'button';
+  modalClearBtn.className = 'search-clear-btn';
+  modalClearBtn.title = 'Effacer';
+  modalClearBtn.setAttribute('aria-label', 'Effacer la recherche dans le résumé');
+  modalClearBtn.textContent = '✕';
+
+  const updateModalClear = () => {
+    const has = String(modalSearch.value || '').trim().length > 0;
+    modalClearBtn.classList.toggle('is-visible', has);
+  };
+  modalClearBtn.addEventListener('click', () => {
+    if (!modalSearch.value) return;
+    modalSearch.value = '';
+    modalSearch.dispatchEvent(new Event('input', { bubbles: true }));
+    try { modalSearch.focus(); } catch {}
+  });
+  modalSearch.addEventListener('input', updateModalClear);
+  updateModalClear();
+
+  modalSearchWrap.appendChild(modalSearch);
+  modalSearchWrap.appendChild(modalClearBtn);
+  modalSearchRow.appendChild(modalSearchWrap);
 
   const modalProgress = document.createElement('div');
   modalProgress.style.marginTop = '0.75rem';
@@ -8616,6 +8766,59 @@ const searchResultsDiv = document.getElementById('searchResults');
 const searchResultsContent = document.getElementById('searchResultsContent');
 searchBar.addEventListener('input', filterThemes);
 
+const clearSearchBarBtn = document.getElementById('clearSearchBar');
+if (searchBar && clearSearchBarBtn) {
+  const update = () => {
+    const has = String(searchBar.value || '').trim().length > 0;
+    clearSearchBarBtn.classList.toggle('is-visible', has);
+  };
+  clearSearchBarBtn.addEventListener('click', () => {
+    if (!searchBar.value) return;
+    searchBar.value = '';
+    searchBar.dispatchEvent(new Event('input', { bubbles: true }));
+    try { searchBar.focus(); } catch {}
+  });
+  searchBar.addEventListener('input', update);
+  update();
+}
+
+// Mode recherche (n'afficher que la recherche + résultats)
+const SEARCH_ONLY_MODE_KEY = 'ui.searchOnlyMode.v1';
+const searchModeToggleBtn = document.getElementById('searchModeToggle');
+
+function setSearchOnlyMode(enabled) {
+  const on = !!enabled;
+  document.body.classList.toggle('search-only-mode', on);
+  try { localStorage.setItem(SEARCH_ONLY_MODE_KEY, on ? '1' : '0'); } catch {}
+  if (searchModeToggleBtn) {
+    searchModeToggleBtn.textContent = on ? '↩️ Quitter recherche' : '🔎 Mode recherche';
+    searchModeToggleBtn.title = on ? 'Revenir à l’affichage normal (Échap)' : 'Afficher uniquement la recherche (Échap pour quitter)';
+  }
+  if (on) {
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch {}
+    try { searchBar.focus(); } catch {}
+  }
+}
+
+if (searchModeToggleBtn) {
+  searchModeToggleBtn.addEventListener('click', () => {
+    const on = document.body.classList.contains('search-only-mode');
+    setSearchOnlyMode(!on);
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('search-only-mode')) {
+    setSearchOnlyMode(false);
+  }
+});
+
+// Restaurer l’état au chargement
+try {
+  const saved = localStorage.getItem(SEARCH_ONLY_MODE_KEY);
+  if (saved === '1') setSearchOnlyMode(true);
+} catch {}
+
 const glossaryBtn = document.getElementById('glossaryBtn');
 if (glossaryBtn) glossaryBtn.addEventListener('click', () => openGlossaryModal());
 
@@ -9095,7 +9298,35 @@ function openGlossaryModal(initialQuery, opts = {}) {
   input.type = 'text';
   input.placeholder = 'Rechercher une définition (ex: diacétyle, CIP, IBU…)';
   input.value = initialQuery ? String(initialQuery) : '';
-  searchRow.appendChild(input);
+  input.style.paddingRight = '2.6rem';
+
+  const inputWrap = document.createElement('div');
+  inputWrap.className = 'search-input-wrap';
+  inputWrap.style.width = '100%';
+
+  const clearBtn = document.createElement('button');
+  clearBtn.type = 'button';
+  clearBtn.className = 'search-clear-btn';
+  clearBtn.title = 'Effacer';
+  clearBtn.setAttribute('aria-label', 'Effacer la recherche du glossaire');
+  clearBtn.textContent = '✕';
+
+  const updateClear = () => {
+    const has = String(input.value || '').trim().length > 0;
+    clearBtn.classList.toggle('is-visible', has);
+  };
+  clearBtn.addEventListener('click', () => {
+    if (!input.value) return;
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    try { input.focus(); } catch {}
+  });
+  input.addEventListener('input', updateClear);
+  updateClear();
+
+  inputWrap.appendChild(input);
+  inputWrap.appendChild(clearBtn);
+  searchRow.appendChild(inputWrap);
 
   // Outils: ajouter une définition + détecter termes manquants
   const tools = document.createElement('div');
@@ -9725,6 +9956,22 @@ function filterThemes() {
 const themeSearchBar = document.getElementById('themeSearchBar');
 const themeSearchResultsDiv = document.getElementById('themeSearchResults');
 const themeSearchResultsContent = document.getElementById('themeSearchResultsContent');
+
+const clearThemeSearchBarBtn = document.getElementById('clearThemeSearchBar');
+if (themeSearchBar && clearThemeSearchBarBtn) {
+  const update = () => {
+    const has = String(themeSearchBar.value || '').trim().length > 0;
+    clearThemeSearchBarBtn.classList.toggle('is-visible', has);
+  };
+  clearThemeSearchBarBtn.addEventListener('click', () => {
+    if (!themeSearchBar.value) return;
+    themeSearchBar.value = '';
+    themeSearchBar.dispatchEvent(new Event('input', { bubbles: true }));
+    try { themeSearchBar.focus(); } catch {}
+  });
+  themeSearchBar.addEventListener('input', update);
+  update();
+}
 
 themeSearchBar.addEventListener('input', filterCurrentTheme);
 
