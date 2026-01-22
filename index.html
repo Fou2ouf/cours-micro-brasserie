@@ -1022,6 +1022,81 @@
       overflow: auto;
     }
 
+    .formula-accordion {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .formula-pane {
+      border: 1px solid rgba(48, 54, 61, 0.9);
+      border-radius: 14px;
+      background: rgba(13, 17, 23, 0.35);
+      overflow: hidden;
+    }
+
+    .formula-pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(13, 17, 23, 0.10));
+    }
+
+    .formula-pane-header:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.22);
+    }
+
+    .formula-pane-title {
+      font-weight: 1100;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .formula-pane-formula {
+      margin-top: 0.25rem;
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .formula-pane-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 0 0 auto;
+    }
+
+    .formula-pane-chevron {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: 1px solid rgba(88, 166, 255, 0.20);
+      background: rgba(88, 166, 255, 0.10);
+      color: var(--text);
+      font-weight: 1100;
+      transition: transform 0.18s ease;
+    }
+
+    .formula-pane.is-open .formula-pane-chevron {
+      transform: rotate(180deg);
+    }
+
+    .formula-pane-body {
+      display: none;
+      padding: 0.9rem 1rem 1rem;
+    }
+
+    .formula-pane.is-open .formula-pane-body {
+      display: block;
+    }
+
     .formula-hero {
       background: rgba(13, 17, 23, 0.6);
       border: 1px solid rgba(88, 166, 255, 0.25);
@@ -1043,6 +1118,23 @@
       font-weight: 900;
       line-height: 1.5;
       margin-bottom: 0.75rem;
+    }
+
+    .formula-eq.is-active {
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(88, 166, 255, 0.25);
+    }
+
+    .formula-eq.is-muted {
+      color: var(--muted);
+      opacity: 0.85;
+    }
+
+    .formula-note {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
     }
 
     .formula-grid {
@@ -5646,6 +5738,356 @@ function toggleModalWindowFullscreen(backdrop, card, btn) {
   btn.title = isFullscreen ? 'Revenir à la taille normale' : 'Mettre cette fenêtre en plein écran';
 }
 
+function showHoublonFormulas() {
+  const existing = document.querySelector('.cat-formulas-backdrop');
+  if (existing) existing.remove();
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'cat-formulas-backdrop';
+
+  const card = document.createElement('div');
+  card.className = 'cat-formulas-card';
+
+  const header = document.createElement('div');
+  header.className = 'cat-formulas-header';
+
+  const title = document.createElement('div');
+  title.className = 'cat-formulas-title';
+  title.textContent = 'Formules — HOUBLON (IBU / Tinseth)';
+
+  const actions = document.createElement('div');
+  actions.className = 'cat-formulas-actions';
+
+  const fsBtn = document.createElement('button');
+  fsBtn.className = 'cat-formulas-fullscreen';
+  fsBtn.textContent = '🖥️ Plein écran';
+  fsBtn.title = 'Mettre cette fenêtre en plein écran';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'cat-formulas-close';
+  closeBtn.textContent = '✖ Fermer';
+  closeBtn.addEventListener('click', () => backdrop.remove());
+
+  actions.appendChild(fsBtn);
+  actions.appendChild(closeBtn);
+  header.appendChild(title);
+  header.appendChild(actions);
+
+  const body = document.createElement('div');
+  body.className = 'cat-formulas-body';
+
+  const fmt = (n, digits = 1) => {
+    if (!isFinite(n)) return '—';
+    return Number(n).toLocaleString('fr-FR', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
+  };
+
+  const makeKpi = (key, sub) => {
+    const kpi = document.createElement('div');
+    kpi.className = 'formula-kpi';
+    const k = document.createElement('div');
+    k.className = 'k';
+    k.textContent = key;
+    const v = document.createElement('div');
+    v.className = 'v';
+    v.textContent = '—';
+    const s = document.createElement('div');
+    s.className = 's';
+    s.textContent = sub || '';
+    kpi.appendChild(k);
+    kpi.appendChild(v);
+    if (sub) kpi.appendChild(s);
+    return { kpi, v, s };
+  };
+
+  const makeNumberField = (id, label, value, step = 'any') => {
+    const wrap = document.createElement('div');
+    wrap.className = 'formula-field';
+    const lab = document.createElement('label');
+    lab.setAttribute('for', id);
+    lab.textContent = label;
+    const inp = document.createElement('input');
+    inp.id = id;
+    inp.type = 'number';
+    inp.step = step;
+    inp.value = String(value);
+    wrap.appendChild(lab);
+    wrap.appendChild(inp);
+    return { wrap, inp };
+  };
+
+  const makeSelectField = (id, label, options, value) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'formula-field';
+    const lab = document.createElement('label');
+    lab.setAttribute('for', id);
+    lab.textContent = label;
+    const sel = document.createElement('select');
+    sel.id = id;
+    (options || []).forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt.value;
+      o.textContent = opt.label;
+      sel.appendChild(o);
+    });
+    sel.value = value;
+    wrap.appendChild(lab);
+    wrap.appendChild(sel);
+    return { wrap, sel };
+  };
+
+  const getUtilFromTable = (timeMin, form) => {
+    // Valeurs “cours” (comme la capture) :
+    // Temps (min): 0-9, 10-19, 20-29, 30-39, 40-59, 60-74, 75+
+    const bins = [
+      { max: 9, cones: 0.05, pellets: 0.06 },
+      { max: 19, cones: 0.12, pellets: 0.15 },
+      { max: 29, cones: 0.15, pellets: 0.19 },
+      { max: 39, cones: 0.19, pellets: 0.24 },
+      { max: 59, cones: 0.22, pellets: 0.27 },
+      { max: 74, cones: 0.24, pellets: 0.30 },
+      { max: Infinity, cones: 0.27, pellets: 0.34 }
+    ];
+    const t = Math.max(0, Number(timeMin) || 0);
+    const f = (form === 'cones') ? 'cones' : 'pellets';
+    const bin = bins.find(b => t <= b.max) || bins[bins.length - 1];
+    return bin[f];
+  };
+
+  // --- Formule IBU (Tinseth “cours”) ---
+  const ibuHero = document.createElement('div');
+  ibuHero.className = 'formula-hero';
+
+  const ibuTitle = document.createElement('h4');
+  ibuTitle.textContent = 'IBU (Tinseth) — calcul interactif';
+  ibuHero.appendChild(ibuTitle);
+
+  const ibuEq = document.createElement('div');
+  ibuEq.className = 'formula-eq';
+  ibuEq.innerHTML = `IBU = (α% × masse houblon (mg) × utilisation) ÷ volume (L) × correction D`;
+  ibuHero.appendChild(ibuEq);
+
+  const ibuGrid = document.createElement('div');
+  ibuGrid.className = 'formula-grid';
+
+  const fAlpha = makeNumberField('ibu_alpha', 'Acides alpha α (%)', 13, 'any');
+  const fHopsG = makeNumberField('ibu_hops_g', 'Houblon ajouté (g)', 80, 'any');
+  const fVolume = makeNumberField('ibu_volume_l', 'Volume (L)', 100, 'any');
+
+  const fUtilMode = makeSelectField(
+    'ibu_util_mode',
+    'Utilisation',
+    [
+      { value: 'table', label: 'Auto (table cours)' },
+      { value: 'manual', label: 'Manuelle (en %)' }
+    ],
+    'table'
+  );
+
+  const fTime = makeNumberField('ibu_time', 'Temps ébullition (min)', 60, '1');
+  const fForm = makeSelectField(
+    'ibu_form',
+    'Forme du houblon',
+    [
+      { value: 'pellets', label: 'Pellets' },
+      { value: 'cones', label: 'Cônes' }
+    ],
+    'pellets'
+  );
+
+  const fUtilManual = makeNumberField('ibu_util_manual', 'Utilisation manuelle (%)', 30, 'any');
+  const fCorrD = makeNumberField('ibu_corr_d', 'Correction D', 1, 'any');
+
+  // Notes sous certains champs
+  const noteUtil = document.createElement('div');
+  noteUtil.className = 'formula-note';
+  noteUtil.textContent = "L'utilisation correspond à la part d'acides alpha isomérisés/extraits (dépend du temps, densité, forme, etc.).";
+  fUtilMode.wrap.appendChild(noteUtil);
+
+  const noteTime = document.createElement('div');
+  noteTime.className = 'formula-note';
+  noteTime.textContent = "Auto: la table donne un taux d'extraction (0.05 → 0.34) selon le temps et cônes/pellets.";
+  fTime.wrap.appendChild(noteTime);
+
+  const noteD = document.createElement('div');
+  noteD.className = 'formula-note';
+  noteD.textContent = "D = facteur de correction (laisser à 1 si non utilisé dans ton cours).";
+  fCorrD.wrap.appendChild(noteD);
+
+  // Groupes “auto” vs “manuel”
+  const autoFields = [fTime.wrap, fForm.wrap];
+  const manualFields = [fUtilManual.wrap];
+
+  [
+    fAlpha.wrap, fHopsG.wrap, fVolume.wrap,
+    fUtilMode.wrap,
+    fTime.wrap, fForm.wrap,
+    fUtilManual.wrap,
+    fCorrD.wrap
+  ].forEach(w => ibuGrid.appendChild(w));
+
+  ibuHero.appendChild(ibuGrid);
+
+  const ibuOut = document.createElement('div');
+  ibuOut.className = 'formula-out';
+
+  const kIbu = makeKpi('IBU (estimé)', '≈ mg/L iso-α');
+  const kUtil = makeKpi('Utilisation retenue', '%');
+  const kIso = makeKpi('Iso-α (estimé)', 'mg/L');
+  [kIbu, kUtil, kIso].forEach(x => ibuOut.appendChild(x.kpi));
+  ibuHero.appendChild(ibuOut);
+
+  const setModeUi = () => {
+    const mode = fUtilMode.sel.value;
+    autoFields.forEach(w => w.style.display = (mode === 'table') ? '' : 'none');
+    manualFields.forEach(w => w.style.display = (mode === 'manual') ? '' : 'none');
+  };
+
+  const calcIbu = () => {
+    const alphaPct = parseFloat(fAlpha.inp.value) || 0;
+    const hopG = parseFloat(fHopsG.inp.value) || 0;
+    const volumeL = parseFloat(fVolume.inp.value) || 0;
+    const corrD = parseFloat(fCorrD.inp.value) || 1;
+
+    const alphaDec = Math.max(alphaPct, 0) / 100;
+    const hopMg = Math.max(hopG, 0) * 1000;
+
+    let utilDec = 0;
+    if (fUtilMode.sel.value === 'manual') {
+      utilDec = Math.max(parseFloat(fUtilManual.inp.value) || 0, 0) / 100;
+    } else {
+      const t = parseFloat(fTime.inp.value) || 0;
+      const form = fForm.sel.value;
+      utilDec = getUtilFromTable(t, form);
+    }
+
+    const V = Math.max(volumeL, 0.0001);
+    const D = isFinite(corrD) && corrD > 0 ? corrD : 1;
+    const isoMgPerL = (alphaDec * hopMg * utilDec) / V;
+    const ibu = isoMgPerL * D;
+
+    kIbu.v.textContent = `${fmt(ibu, 1)} IBU`;
+    kUtil.v.textContent = `${fmt(utilDec * 100, 1)} %`;
+    kIso.v.textContent = `${fmt(isoMgPerL, 1)} mg/L`;
+
+    const warn = ibu >= 100;
+    kIbu.kpi.classList.toggle('warn', warn);
+    if (warn) {
+      kIbu.s.textContent = 'Valeur très élevée : vérifie volume, masse, α% et utilisation.';
+    } else {
+      kIbu.s.textContent = 'Estimation (dépend aussi du process, pertes, adsorption…).';
+    }
+  };
+
+  const inputs = [
+    fAlpha.inp, fHopsG.inp, fVolume.inp, fTime.inp, fUtilManual.inp, fCorrD.inp,
+    fUtilMode.sel, fForm.sel
+  ].filter(Boolean);
+  inputs.forEach(el => {
+    el.addEventListener('input', () => { setModeUi(); calcIbu(); });
+    el.addEventListener('change', () => { setModeUi(); calcIbu(); });
+  });
+  setModeUi();
+  calcIbu();
+
+  const ibuExplain = document.createElement('div');
+  ibuExplain.className = 'formula-explain';
+  ibuExplain.innerHTML = `
+    <h4>Notion d'« utilisation »</h4>
+    <div class="line"><strong>Utilisation</strong> = (iso-α dans la bière / α introduits) × 100</div>
+    <div class="line"><strong>Influencée essentiellement par</strong> :</div>
+    <div class="line">• T° et durée d'ébullition (+ design de la cuve, agitation)</div>
+    <div class="line">• Densité du moût</div>
+    <div class="line">• pH</div>
+    <div class="line">• « importance » du houblonnage</div>
+    <div class="line">• Cations (Mg++ & Ca++)</div>
+    <div class="line">• Forme du houblon (cônes / pellets)</div>
+  `;
+
+  // Accordéon (prêt pour plusieurs formules plus tard)
+  const accordion = document.createElement('div');
+  accordion.className = 'formula-accordion';
+
+  const panes = [];
+  const closeAll = () => panes.forEach(p => p.classList.remove('is-open'));
+  const createPane = (paneTitle, summaryHtml, contentNodes) => {
+    const pane = document.createElement('div');
+    pane.className = 'formula-pane';
+
+    const head = document.createElement('div');
+    head.className = 'formula-pane-header';
+    head.setAttribute('role', 'button');
+    head.setAttribute('tabindex', '0');
+
+    const left = document.createElement('div');
+    const t = document.createElement('div');
+    t.className = 'formula-pane-title';
+    t.textContent = paneTitle;
+    const f = document.createElement('div');
+    f.className = 'formula-pane-formula';
+    f.innerHTML = summaryHtml;
+    left.appendChild(t);
+    left.appendChild(f);
+
+    const right = document.createElement('div');
+    right.className = 'formula-pane-right';
+    const chev = document.createElement('div');
+    chev.className = 'formula-pane-chevron';
+    chev.textContent = '▼';
+    right.appendChild(chev);
+
+    head.appendChild(left);
+    head.appendChild(right);
+
+    const content = document.createElement('div');
+    content.className = 'formula-pane-body';
+    (contentNodes || []).forEach(n => content.appendChild(n));
+
+    const toggle = () => {
+      const willOpen = !pane.classList.contains('is-open');
+      closeAll();
+      if (willOpen) {
+        pane.classList.add('is-open');
+        requestAnimationFrame(() => {
+          try { head.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch {}
+        });
+      }
+    };
+
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+
+    pane.appendChild(head);
+    pane.appendChild(content);
+    panes.push(pane);
+    return pane;
+  };
+
+  const paneIbu = createPane(
+    'IBU (Tinseth) — calcul',
+    'IBU = (α% × masse (mg) × utilisation) ÷ volume (L) × D',
+    [ibuHero, ibuExplain]
+  );
+
+  accordion.appendChild(paneIbu);
+  body.appendChild(accordion);
+
+  card.appendChild(header);
+  card.appendChild(body);
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
+
+  fsBtn.addEventListener('click', () => toggleModalWindowFullscreen(backdrop, card, fsBtn));
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+}
+
 function showLevureFormulas() {
   const existing = document.querySelector('.cat-formulas-backdrop');
   if (existing) existing.remove();
@@ -5818,7 +6260,6 @@ function showLevureFormulas() {
   ].forEach(inp => inp.addEventListener('input', calc));
 
   calc();
-  body.appendChild(hero);
 
   const explain1 = document.createElement('div');
   explain1.className = 'formula-explain';
@@ -5828,7 +6269,6 @@ function showLevureFormulas() {
     <div class="line"><strong>×2</strong> : 1g de sucre → ~0.5g CO₂</div>
     <div class="line"><strong>CO₂ “limite”</strong> : produit par les sucres résiduels fermentescibles</div>
   `;
-  body.appendChild(explain1);
 
   const explain2 = document.createElement('div');
   explain2.className = 'formula-explain';
@@ -5846,7 +6286,224 @@ function showLevureFormulas() {
     <div class="line"><strong>Calcul</strong> : ((8 − 3.8 − 0.75) × 100 × 2) / 1 = 690g</div>
     <div class="line"><strong>Résultat</strong> : ~6.9 g/L de sucre à ajouter</div>
   `;
-  body.appendChild(explain2);
+
+  // --- Respiration vs Fermentation (2 équations dynamiques) ---
+  const rfHero = document.createElement('div');
+  rfHero.className = 'formula-hero';
+
+  const rfTitle = document.createElement('h4');
+  rfTitle.textContent = 'Levure : respiration vs fermentation (oxygène / sucres)';
+  rfHero.appendChild(rfTitle);
+
+  const rfEqResp = document.createElement('div');
+  rfEqResp.className = 'formula-eq';
+  rfEqResp.innerHTML = `Si <strong>présence d'oxygène</strong> (tendance respiration) : C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + énergie`;
+  rfHero.appendChild(rfEqResp);
+
+  const rfEqFerm = document.createElement('div');
+  rfEqFerm.className = 'formula-eq';
+  rfEqFerm.innerHTML = `Si <strong>absence d'oxygène</strong> (tendance fermentation) : C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂ + énergie`;
+  rfHero.appendChild(rfEqFerm);
+
+  const rfGrid = document.createElement('div');
+  rfGrid.className = 'formula-grid';
+
+  const rfO2 = document.createElement('div');
+  rfO2.className = 'formula-field';
+  rfO2.innerHTML = `
+    <label>Oxygène</label>
+    <div style="display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center;">
+      <label style="display:inline-flex; gap:0.35rem; align-items:center; font-weight:900; color: var(--text);">
+        <input type="radio" name="rf_o2" value="present" checked /> Présent
+      </label>
+      <label style="display:inline-flex; gap:0.35rem; align-items:center; font-weight:900; color: var(--text);">
+        <input type="radio" name="rf_o2" value="absent" /> Absent
+      </label>
+    </div>
+    <div class="formula-note">En brassage : on oxygène surtout au départ pour la croissance, puis la fermentation domine.</div>
+  `;
+  rfGrid.appendChild(rfO2);
+
+  const rfSugarConc = document.createElement('div');
+  rfSugarConc.className = 'formula-field';
+  rfSugarConc.innerHTML = `
+    <label for="rf_sugar_conc">Concentration en sucres (g/L)</label>
+    <input id="rf_sugar_conc" type="number" step="any" value="120" />
+    <div class="formula-note">NB : une forte concentration en sucres peut orienter vers la fermentation même si O₂ est présent (effet Crabtree).</div>
+  `;
+  rfGrid.appendChild(rfSugarConc);
+
+  const rfGlucose = document.createElement('div');
+  rfGlucose.className = 'formula-field';
+  rfGlucose.innerHTML = `
+    <label for="rf_glucose">Glucose (g) (pour estimer les produits)</label>
+    <input id="rf_glucose" type="number" step="any" value="100" />
+    <div class="formula-note">Sorties théoriques basées sur la stœchiométrie des équations.</div>
+  `;
+  rfGrid.appendChild(rfGlucose);
+
+  rfHero.appendChild(rfGrid);
+
+  const rfOut = document.createElement('div');
+  rfOut.className = 'formula-out';
+
+  const rfMode = makeKpi('Voie dominante (estimation)', 'selon O₂ + sucres');
+  const rfCo2 = makeKpi('CO₂ produit (théorique)', 'g (pour la masse de glucose)');
+  const rfEtOH = makeKpi('Éthanol produit (théorique)', 'g (pour la masse de glucose)');
+  const rfEnergy = makeKpi('Énergie (ordre de grandeur)', 'respiration ≈ 14× fermentation');
+  [rfMode, rfCo2, rfEtOH, rfEnergy].forEach(x => rfOut.appendChild(x.kpi));
+  rfHero.appendChild(rfOut);
+
+  const rfExplain = document.createElement('div');
+  rfExplain.className = 'formula-explain';
+  rfExplain.innerHTML = `
+    <h4>Résumé</h4>
+    <div class="line">• <strong>O₂ présent</strong> : la levure <strong>respire</strong> → plus d'énergie (croissance / biomasse).</div>
+    <div class="line">• <strong>O₂ absent</strong> : la levure <strong>fermente</strong> → beaucoup moins rentable énergétiquement (≈ <strong>14× moins</strong>).</div>
+    <div class="line">• <strong>NB</strong> : la <strong>concentration en sucres</strong> peut orienter la levure vers fermentation vs respiration.</div>
+  `;
+
+  const getRfInputs = () => {
+    const o2 = (body.querySelector('input[name="rf_o2"]:checked') || {}).value || 'present';
+    const sugarConc = parseFloat((body.querySelector('#rf_sugar_conc') || {}).value) || 0;
+    const glucoseG = parseFloat((body.querySelector('#rf_glucose') || {}).value) || 0;
+    return { o2, sugarConc, glucoseG };
+  };
+
+  const rfCalc = () => {
+    const { o2, sugarConc, glucoseG } = getRfInputs();
+
+    // Heuristique simple (lisible) :
+    // - O2 absent => fermentation
+    // - O2 présent + sucres très élevés => fermentation (Crabtree)
+    // - sinon => respiration
+    const highSugar = sugarConc >= 100; // seuil volontairement simple
+    const mode = (o2 === 'absent' || highSugar) ? 'fermentation' : 'respiration';
+
+    // Stœchiométrie (g produits / g glucose)
+    const M_GLU = 180.156;
+    const M_CO2 = 44.01;
+    const M_ETOH = 46.07;
+
+    const co2PerG_resp = (6 * M_CO2) / M_GLU;
+    const co2PerG_ferm = (2 * M_CO2) / M_GLU;
+    const etohPerG_ferm = (2 * M_ETOH) / M_GLU;
+
+    const co2G = glucoseG * (mode === 'respiration' ? co2PerG_resp : co2PerG_ferm);
+    const etohG = mode === 'respiration' ? 0 : glucoseG * etohPerG_ferm;
+
+    rfMode.v.textContent = mode === 'respiration' ? 'Respiration' : 'Fermentation';
+    rfCo2.v.textContent = `${fmt(co2G, 1)} g`;
+    rfEtOH.v.textContent = `${fmt(etohG, 1)} g`;
+    rfEnergy.v.textContent = mode === 'respiration' ? '≈ 14× (max)' : '≈ 1× (référence)';
+
+    // Mise en avant visuelle des équations
+    rfEqResp.classList.toggle('is-active', mode === 'respiration');
+    rfEqResp.classList.toggle('is-muted', mode !== 'respiration');
+    rfEqFerm.classList.toggle('is-active', mode === 'fermentation');
+    rfEqFerm.classList.toggle('is-muted', mode !== 'fermentation');
+
+    // Message d'aide
+    if (o2 === 'present' && highSugar) {
+      rfMode.s.textContent = 'O₂ présent mais sucres élevés : tendance fermentation (Crabtree).';
+    } else if (o2 === 'present') {
+      rfMode.s.textContent = 'O₂ présent + sucres modérés : tendance respiration.';
+    } else {
+      rfMode.s.textContent = 'O₂ absent : fermentation.';
+    }
+  };
+
+  // Écouteurs
+  const rfInputs = [
+    ...Array.from(rfO2.querySelectorAll('input[name="rf_o2"]')),
+    rfSugarConc.querySelector('#rf_sugar_conc'),
+    rfGlucose.querySelector('#rf_glucose')
+  ].filter(Boolean);
+  rfInputs.forEach(el => el.addEventListener('input', rfCalc));
+  rfInputs.forEach(el => el.addEventListener('change', rfCalc));
+  rfCalc();
+
+  // Accordéon : 2 formules au choix (clique pour ouvrir)
+  const accordion = document.createElement('div');
+  accordion.className = 'formula-accordion';
+
+  const panes = [];
+  const closeAll = () => panes.forEach(p => p.classList.remove('is-open'));
+  const createPane = (paneTitle, summaryHtml, contentNodes) => {
+    const pane = document.createElement('div');
+    pane.className = 'formula-pane';
+
+    const head = document.createElement('div');
+    head.className = 'formula-pane-header';
+    head.setAttribute('role', 'button');
+    head.setAttribute('tabindex', '0');
+
+    const left = document.createElement('div');
+    const t = document.createElement('div');
+    t.className = 'formula-pane-title';
+    t.textContent = paneTitle;
+    const f = document.createElement('div');
+    f.className = 'formula-pane-formula';
+    f.innerHTML = summaryHtml;
+    left.appendChild(t);
+    left.appendChild(f);
+
+    const right = document.createElement('div');
+    right.className = 'formula-pane-right';
+    const chev = document.createElement('div');
+    chev.className = 'formula-pane-chevron';
+    chev.textContent = '▼';
+    right.appendChild(chev);
+
+    head.appendChild(left);
+    head.appendChild(right);
+
+    const content = document.createElement('div');
+    content.className = 'formula-pane-body';
+    (contentNodes || []).forEach(n => content.appendChild(n));
+
+    const toggle = () => {
+      const willOpen = !pane.classList.contains('is-open');
+      closeAll();
+      if (willOpen) {
+        pane.classList.add('is-open');
+        requestAnimationFrame(() => {
+          try {
+            head.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } catch {}
+        });
+      }
+    };
+
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+
+    pane.appendChild(head);
+    pane.appendChild(content);
+    panes.push(pane);
+    return pane;
+  };
+
+  const paneSucrage = createPane(
+    'Sucrage / CO₂ (référmentation) — calcul',
+    'Sucre (g) = ((CO₂ visé − CO₂ présent − CO₂ “limite”) × V(L) × 2) ÷ concentration',
+    [hero, explain1, explain2]
+  );
+
+  const paneRF = createPane(
+    'Respiration vs fermentation — théorie',
+    'Avec O₂ : C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O · Sans O₂ : C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂',
+    [rfHero, rfExplain]
+  );
+
+  accordion.appendChild(paneSucrage);
+  accordion.appendChild(paneRF);
+  body.appendChild(accordion);
 
   card.appendChild(header);
   card.appendChild(body);
@@ -6363,6 +7020,16 @@ categoryOrder.forEach(category => {
     formulasBtn.textContent = '🧪 Formules';
     formulasBtn.title = 'Outils de calcul (sucrage / CO₂)';
     formulasBtn.addEventListener('click', () => showLevureFormulas());
+    catActions.appendChild(formulasBtn);
+  }
+
+  // Bouton Formules pour la catégorie HOUBLON (IBU)
+  if (category === 'HOUBLON') {
+    const formulasBtn = document.createElement('button');
+    formulasBtn.className = 'category-action-btn formulas';
+    formulasBtn.textContent = '🧪 Formules';
+    formulasBtn.title = 'Outils de calcul (IBU / Tinseth)';
+    formulasBtn.addEventListener('click', () => showHoublonFormulas());
     catActions.appendChild(formulasBtn);
   }
 
